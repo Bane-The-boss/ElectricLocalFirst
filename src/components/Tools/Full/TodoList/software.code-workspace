@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../../software"
+		},
+		{
+			"path": "../../../../.."
+		},
+		{
+			"path": "../../../../../../prisma"
+		},
+		{
+			"path": "../../../../../../newproject/newproject"
+		}
+	],
+	"settings": {}
+}
