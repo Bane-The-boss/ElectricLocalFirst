@@ -32,8 +32,6 @@ const ImageCloudinary  = () => {
         (error, result) => {
           if (!error && result && result.event === 'success') {
             const imageUrl = result.info.secure_url;
-            console.log('Info is ', result.info);
-            console.log('Url is ', imageUrl);
             // Save the URL to the backend
             saveImageUrl(imageUrl);
           }

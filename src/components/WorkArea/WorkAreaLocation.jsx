@@ -3,7 +3,7 @@ import React, {useEffect, useRef, useState, useMemo} from 'react';
 //import 'react-contexify/ReactContexify.css';
 import { generatePseudoRandomId } from '../../services/ids';
 //import {getaddResizableBox, getMoveResizableBox, getRemoveResizableBox} from './ManipulateResizableBox'
-//import {getUseDrop} from './OnAction';
+import { useDrop } from 'react-dnd';
 import './WorkAreaStyle.css'
 import { stopPropagationAndPreventDefault } from '../../services/DOM';
 //import {throttle} from 'lodash';
@@ -13,6 +13,7 @@ import BoardTopBar from '../Board/BoardTopBar';
 import {useLiveQuery} from 'electric-sql/react'
 import { useElectric } from '../../ElectricProvider'
 import WorkComponent from '../WorkComponent/WorkComponent';
+import ItemTypes from '../Tools/SideFiles/itemTypes';
 
 function WorkAreaLocation (props){
     const {
@@ -28,55 +29,22 @@ function WorkAreaLocation (props){
             await shape.synced
          } 
         syncItems()
-    },[]);
+    },[db]);
 
-    const [documents, setDocuments] = useState([]);
-    const [imageDocuments, setImageDocuments] = useState([]);
-    const [todoListDocuments, setTodoListDocuments] = useState([]);
-   
-    const fetchDocuments = async () => {
-        try {
-            const result = await db.testdocument.findMany({
-                where: {
-                    experiment_name: activeExperiment
-                }
-            });
-            setDocuments(result);
-            console.log();
-
-        } catch (error) {
-            console.error('Error fetching documents:', error);
+  
+    const {results} = useLiveQuery(db.testdocument.liveMany({
+        where: {
+            experiment_name: activeExperiment
         }
-    };
+    }));
 
-    const fetchImageData = async () => {
-        try {
-            const result = await db.testdocument.findMany({
-                where: {
-                    experiment_name: activeExperiment, 
-                    type: 'Image'
-                }
-            });
-            setDocuments(result);
-
-        } catch (error) {
-            console.error('Error fetching documents:', error);
-        }
-    };
-
-    const fetchTodoListData = async() => {
-
-    }
-
-    useEffect(() => {
-        fetchDocuments();
-    }, [activeExperiment]);
-
+    
     return(
-      <div >
-        <span>hello</span>
-        {   documents && documents.map((component) => (
+      <div className='psitionofWorkarea' 
+      >
+        {   results && results?.map((component) => (
             <WorkComponent
+            key ={component.doc_id}
             id= {component.doc_id}
             left={component.x_position}
             top={component.y_position}
@@ -85,7 +53,6 @@ function WorkAreaLocation (props){
             renderTool={component.type}
          ></WorkComponent>
             ))}
-
       </div>
     )
 }

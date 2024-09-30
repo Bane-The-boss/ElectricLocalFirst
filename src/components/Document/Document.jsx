@@ -25,19 +25,6 @@ const Document = (props) => {
         syncItems()
     }, [])
  
-    // useEffect(() => {
-    //     const fetchTodolistInfo = async () => {
-    //         const instrumentInfo1 = await db.doc.findUnique({
-    //             where: {
-    //                 doc_id: 1713
-    //             }
-    //         });
-    //         console.log('Yay is ' + instrumentInfo1);
-    //         setInstrumentInfo(instrumentInfo1);
-    //     }
-    //         fetchTodolistInfo('yeah');
-    // }, [])
- 
     useEffect (() => {
         const fetchDocInfo = async () => {
         const result =  await db.todolist.findUnique({
@@ -51,9 +38,6 @@ const Document = (props) => {
         fetchDocInfo()
     }, [])
   
-    //const titleString = docInfo.task + ' ' + docInfo.id;
-    //const titleString =  ' ' + docInfo.task;
-
 
     return (
         <Card ref={setNodeRef}>

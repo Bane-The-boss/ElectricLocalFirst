@@ -1,10 +1,9 @@
-.positionofWorkarea {
+.boardarea{
     position: relative; /* Contain any absolute positioning inside the parent */
     width: 100%; /* Adjust to the desired width */
     height: 100vh; /* Full viewport height or adjust accordingly */
-    background-color: #a889a1; /* Optional background for visibility */
+    background-color: #e1e4ec; /* Optional background for visibility */
     overflow: auto; /* Ensure that components do not overflow, and allow scrolling */
-    border: 20px solid rgb(222, 222, 232);
-    z-index: 1000;
+    border: 5px solid white;
   }
   

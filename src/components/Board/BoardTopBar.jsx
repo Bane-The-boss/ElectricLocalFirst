@@ -10,6 +10,9 @@ import TodoList from "../Tools/Full/TodoList/TodoList";
 import ImageWidget from "../Tools/Full/Image/ImageWidget";
 import { useNavigate } from "react-router-dom";
 import { EXPERIMENTS } from "./boardConfig";
+import { useDrop } from 'react-dnd';
+
+import './BoardTopBar.css'
 import {
     ChevronLeft as ChevronLeftIcon,
     ChevronRight as ChevronRightIcon,
@@ -30,20 +33,17 @@ const BoardTopBar = () => {
             await shape.synced
          } 
         syncItems()
-    },[])
+    },[db])
    
     const theme = useTheme();
 
-    const items = ['Apple', 'Banana', 'Orange', 'Grapes'];
-    const entry1 = [1, 2];
-    const entry2 = [3, 4];
+    const items = ['Experiment 1', 'Experiment 2', 'Experiment 3', 'Experiment 4'];
 
-    //const results = useLiveQuery(db.testdocument.liveMany());
-   //console.log('results are ', results);
 
 
     const [open, setOpen] = useState(false);
-    const [experimentName, setExperimentName] = useState('Apple');
+    const [loading, setLoading] = useState(true);
+    const [experimentName, setExperimentName] = useState('Experiment 1');
     const [itemType, setItemType] = useState (undefined);
     const [isToolClicked, setIsToolClickedStatus] = useState(false);
     const [xyMousePositions, setxyMousePositions] = useState({x:0, y:0})
@@ -52,14 +52,54 @@ const BoardTopBar = () => {
         setOpen(true);
     };
 
-   
+    const [, drop] = useDrop({
+        accept: 'WorkComponent',  // Define the accepted drag item type
+        drop: (item, monitor) => {
+            if (!item || !monitor) {
+                console.error('Item not provided in drop!');
+                return;
+            }
+            const delta = monitor.getDifferenceFromInitialOffset();  // Get the offset from initial drag
+            
+            if (!delta) {
+                console.error('Delta not calculated correctly');
+                return;
+            }
+            const newLeft = Math.round(item.left + delta.x);  // Calculate new left position
+            const newTop = Math.round(item.top + delta.y);    // Calculate new top position
+            console.log('New  left position is ', newLeft);
+            // Update the document's position in the database
+            updateComponentPosition(item.id, newLeft, newTop);
+        },
+        collect: ( monitor) => {
+            const isOver = monitor.isOver();  // Whether the dragged item is currently over the drop target
+            const canDrop = monitor.canDrop();  // Whether the item can be dropped on this target
+        return {
+            isOver,
+            canDrop
+        };
+            
+    },
+    });
+
+    // Function to update the component's position in the database
+    const updateComponentPosition = async (id, left, top) => {
+        try {
+            await db.testdocument.update({
+                where: { doc_id: id },
+                data: { x_position: left, y_position: top },
+            });
+            // Refresh documents after update
+        } catch (error) {
+            console.error('Error updating component position:', error);
+        }
+    };
 
     async function addDocument(docType, xPosition, yPosition){
         const creationTime = new Date();
         await db.testdocument.create({
             data:{
                 doc_id: parseInt(generatePseudoRandomId()),
-                //name: 'name',
                 type: docType,
                 createdtime: creationTime.toLocaleTimeString(), 
                 experiment_name: experimentName,
@@ -87,10 +127,12 @@ const BoardTopBar = () => {
         
         if (!appBar.contains(e.target) && !drawer.contains(e.target)) {
             if(isToolClicked)
-                addDocument(itemType, e.clientX, e.clientY, 200, 300 );
+                addDocument(itemType, e.clientX, e.clientY, 400, 300 );
         }
     };
   
+
+    
         const setToolType = (e, itemType) =>{
             //sets whether tool is 'todolist' or 'image'
             e.preventDefault();
@@ -102,10 +144,10 @@ const BoardTopBar = () => {
         const value = e.target.value;
         setExperimentName(value);
     };
-
-   
-
-    return(<Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column' }} onClick={handleWorkAreaClick}>
+    
+    
+    
+    return(<Box className="boardarea" sx={{ height: '100vh', display: 'flex', flexDirection: 'column' }} onClick={handleWorkAreaClick}>
         <div>
         <AppBar position="sticky">
            <Toolbar>
@@ -122,7 +164,7 @@ const BoardTopBar = () => {
             <Select
                 id='experiment_id'
                 onChange={HandleExperimentChange}
-                defaultValue={'defaultVal'}
+                defaultValue={'Experiment 1'}
                 label='Experiments'
             >
                 
@@ -152,7 +194,7 @@ const BoardTopBar = () => {
             anchor="left"
             open={open}
         >
-             <IconButton data-testId='closeDrawer' onClick={() => { try { HandleDrawerClose(); } catch (err) { console.log('yellow') } }} size="large">
+             <IconButton  onClick={() => { try { HandleDrawerClose(); } catch (err) { console.log('yellow') } }} size="large">
                         {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                     </IconButton>
             <Divider/>
@@ -179,8 +221,9 @@ const BoardTopBar = () => {
             >Logout</Button>
         </Drawer>
         </div>
-        <div    >
+        <div   ref={drop} style={{ height: '100vh' , overflow: 'auto', position:'relative'}}>
         <Box sx={{ flex: 1 }}> 
+        <span>Experiment is {experimentName}</span>
         <WorkAreaLocation 
           activeExperiment={experimentName}
           addItem={isToolClicked}

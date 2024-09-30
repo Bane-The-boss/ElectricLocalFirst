@@ -33,6 +33,11 @@ const ElectricProviderComponent = ({
       const client = await electrify(conn, schema, config)
       await client.connect(authToken())
 
+      if (config.debug) {
+        const { addToolbar } = await import('@electric-sql/debug-toolbar')
+        addToolbar(client)
+      }
+
       if (!isMounted) {
         return
       }

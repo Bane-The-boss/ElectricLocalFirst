@@ -40,8 +40,8 @@ const LoginScreen = () => {
     const [formValues, setFormValues] = useState({ userName: 111, password: '', loginType: 's', remember: true });
 
     const goToadminBoard = async(event) => {
-        navigate('/board');
-     // navigate('/document')
+        event.preventDefault();
+       navigate('/board');
     };
 
 
@@ -58,25 +58,8 @@ const LoginScreen = () => {
         }
     }, []);
 
-    const loginHandler = (event) => {
-        console.log('IN login handler');
-        event.preventDefault();
-        const enteredUserName = formValues?.loginType + formValues?.userName;
-        const enteredPassword = formValues?.password;
-        const expectedPassword = String(md5(enteredUserName + 'LABBOOK')).substring(0, 10);
-        const validUserFlag = formValues?.loginType === 'a' ? enteredPassword === expectedPassword : true;
 
-        if (validUserFlag && enteredUserName) {
-            //navigate(`${packageJson.homepage}/board?id=${enteredUserName}`);
 
-            if (formValues.remember) {
-                window.sessionStorage.setItem(packageJson.homepage, enteredUserName);
-            }
-        } else {
-            toast.error('Bitte geben Sie einen gültigen Benutzernamen und ein gültiges Passwort ein. Wenden Sie sich bei Fragen an den Administrator.');
-        }
-
-    };
     return (
         <React.Fragment>
         <AppBar position='sticky'>
@@ -96,7 +79,7 @@ const LoginScreen = () => {
             </Toolbar>
             </AppBar>
 
-            <Box component='form' onSubmit={goToadminBoard()} margin={10}>
+            <Box component='form' onSubmit={goToadminBoard} margin={10}>
                 <TextField
                     required
                     autoFocus
@@ -155,7 +138,7 @@ const LoginScreen = () => {
                     variant="contained"
                     color="primary"
                     disabled={!(formValues.userName && formValues.loginType)}
-                    onClick={goToadminBoard()}
+                    onClick={goToadminBoard}
                 > LogIn </Button>
 
                

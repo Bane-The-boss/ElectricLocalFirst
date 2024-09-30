@@ -22,7 +22,7 @@ export const SortOrderSchema = z.enum(['asc','desc']);
 
 export const TestdocumentScalarFieldEnumSchema = z.enum(['doc_id','experiment_name','type','createdtime','x_position','y_position','width','height']);
 
-export const TodolistScalarFieldEnumSchema = z.enum(['doc_id','item_id','checked','task']);
+export const TodolistScalarFieldEnumSchema = z.enum(['item_id','doc_id','checked','task']);
 
 export const TransactionIsolationLevelSchema = z.enum(['ReadUncommitted','ReadCommitted','RepeatableRead','Serializable']);
 /////////////////////////////////////////
@@ -75,8 +75,8 @@ export type Testdocument = z.infer<typeof TestdocumentSchema>
 /////////////////////////////////////////
 
 export const TodolistSchema = z.object({
-  doc_id: z.number().int().gte(-2147483648).lte(2147483647),
   item_id: z.number().int().gte(-2147483648).lte(2147483647),
+  doc_id: z.number().int().gte(-2147483648).lte(2147483647),
   checked: z.number().int().gte(-2147483648).lte(2147483647).nullable(),
   task: z.string().nullable(),
 })
@@ -120,21 +120,11 @@ export const Random1SelectSchema: z.ZodType<Prisma.Random1Select> = z.object({
 
 export const TestdocumentIncludeSchema: z.ZodType<Prisma.TestdocumentInclude> = z.object({
   images: z.union([z.boolean(),z.lazy(() => ImagesArgsSchema)]).optional(),
-  todolist: z.union([z.boolean(),z.lazy(() => TodolistFindManyArgsSchema)]).optional(),
-  _count: z.union([z.boolean(),z.lazy(() => TestdocumentCountOutputTypeArgsSchema)]).optional(),
 }).strict()
 
 export const TestdocumentArgsSchema: z.ZodType<Prisma.TestdocumentArgs> = z.object({
   select: z.lazy(() => TestdocumentSelectSchema).optional(),
   include: z.lazy(() => TestdocumentIncludeSchema).optional(),
-}).strict();
-
-export const TestdocumentCountOutputTypeArgsSchema: z.ZodType<Prisma.TestdocumentCountOutputTypeArgs> = z.object({
-  select: z.lazy(() => TestdocumentCountOutputTypeSelectSchema).nullish(),
-}).strict();
-
-export const TestdocumentCountOutputTypeSelectSchema: z.ZodType<Prisma.TestdocumentCountOutputTypeSelect> = z.object({
-  todolist: z.boolean().optional(),
 }).strict();
 
 export const TestdocumentSelectSchema: z.ZodType<Prisma.TestdocumentSelect> = z.object({
@@ -147,28 +137,16 @@ export const TestdocumentSelectSchema: z.ZodType<Prisma.TestdocumentSelect> = z.
   width: z.boolean().optional(),
   height: z.boolean().optional(),
   images: z.union([z.boolean(),z.lazy(() => ImagesArgsSchema)]).optional(),
-  todolist: z.union([z.boolean(),z.lazy(() => TodolistFindManyArgsSchema)]).optional(),
-  _count: z.union([z.boolean(),z.lazy(() => TestdocumentCountOutputTypeArgsSchema)]).optional(),
 }).strict()
 
 // TODOLIST
 //------------------------------------------------------
 
-export const TodolistIncludeSchema: z.ZodType<Prisma.TodolistInclude> = z.object({
-  testdocument: z.union([z.boolean(),z.lazy(() => TestdocumentArgsSchema)]).optional(),
-}).strict()
-
-export const TodolistArgsSchema: z.ZodType<Prisma.TodolistArgs> = z.object({
-  select: z.lazy(() => TodolistSelectSchema).optional(),
-  include: z.lazy(() => TodolistIncludeSchema).optional(),
-}).strict();
-
 export const TodolistSelectSchema: z.ZodType<Prisma.TodolistSelect> = z.object({
-  doc_id: z.boolean().optional(),
   item_id: z.boolean().optional(),
+  doc_id: z.boolean().optional(),
   checked: z.boolean().optional(),
   task: z.boolean().optional(),
-  testdocument: z.union([z.boolean(),z.lazy(() => TestdocumentArgsSchema)]).optional(),
 }).strict()
 
 
@@ -269,7 +247,6 @@ export const TestdocumentWhereInputSchema: z.ZodType<Prisma.TestdocumentWhereInp
   width: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
   height: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
   images: z.union([ z.lazy(() => ImagesRelationFilterSchema),z.lazy(() => ImagesWhereInputSchema) ]).optional().nullable(),
-  todolist: z.lazy(() => TodolistListRelationFilterSchema).optional()
 }).strict();
 
 export const TestdocumentOrderByWithRelationInputSchema: z.ZodType<Prisma.TestdocumentOrderByWithRelationInput> = z.object({
@@ -281,8 +258,7 @@ export const TestdocumentOrderByWithRelationInputSchema: z.ZodType<Prisma.Testdo
   y_position: z.lazy(() => SortOrderSchema).optional(),
   width: z.lazy(() => SortOrderSchema).optional(),
   height: z.lazy(() => SortOrderSchema).optional(),
-  images: z.lazy(() => ImagesOrderByWithRelationInputSchema).optional(),
-  todolist: z.lazy(() => TodolistOrderByRelationAggregateInputSchema).optional()
+  images: z.lazy(() => ImagesOrderByWithRelationInputSchema).optional()
 }).strict();
 
 export const TestdocumentWhereUniqueInputSchema: z.ZodType<Prisma.TestdocumentWhereUniqueInput> = z.object({
@@ -323,19 +299,17 @@ export const TodolistWhereInputSchema: z.ZodType<Prisma.TodolistWhereInput> = z.
   AND: z.union([ z.lazy(() => TodolistWhereInputSchema),z.lazy(() => TodolistWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => TodolistWhereInputSchema).array().optional(),
   NOT: z.union([ z.lazy(() => TodolistWhereInputSchema),z.lazy(() => TodolistWhereInputSchema).array() ]).optional(),
-  doc_id: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   item_id: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
+  doc_id: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   checked: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
   task: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  testdocument: z.union([ z.lazy(() => TestdocumentRelationFilterSchema),z.lazy(() => TestdocumentWhereInputSchema) ]).optional(),
 }).strict();
 
 export const TodolistOrderByWithRelationInputSchema: z.ZodType<Prisma.TodolistOrderByWithRelationInput> = z.object({
-  doc_id: z.lazy(() => SortOrderSchema).optional(),
   item_id: z.lazy(() => SortOrderSchema).optional(),
+  doc_id: z.lazy(() => SortOrderSchema).optional(),
   checked: z.lazy(() => SortOrderSchema).optional(),
-  task: z.lazy(() => SortOrderSchema).optional(),
-  testdocument: z.lazy(() => TestdocumentOrderByWithRelationInputSchema).optional()
+  task: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const TodolistWhereUniqueInputSchema: z.ZodType<Prisma.TodolistWhereUniqueInput> = z.object({
@@ -343,8 +317,8 @@ export const TodolistWhereUniqueInputSchema: z.ZodType<Prisma.TodolistWhereUniqu
 }).strict();
 
 export const TodolistOrderByWithAggregationInputSchema: z.ZodType<Prisma.TodolistOrderByWithAggregationInput> = z.object({
-  doc_id: z.lazy(() => SortOrderSchema).optional(),
   item_id: z.lazy(() => SortOrderSchema).optional(),
+  doc_id: z.lazy(() => SortOrderSchema).optional(),
   checked: z.lazy(() => SortOrderSchema).optional(),
   task: z.lazy(() => SortOrderSchema).optional(),
   _count: z.lazy(() => TodolistCountOrderByAggregateInputSchema).optional(),
@@ -358,8 +332,8 @@ export const TodolistScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Todo
   AND: z.union([ z.lazy(() => TodolistScalarWhereWithAggregatesInputSchema),z.lazy(() => TodolistScalarWhereWithAggregatesInputSchema).array() ]).optional(),
   OR: z.lazy(() => TodolistScalarWhereWithAggregatesInputSchema).array().optional(),
   NOT: z.union([ z.lazy(() => TodolistScalarWhereWithAggregatesInputSchema),z.lazy(() => TodolistScalarWhereWithAggregatesInputSchema).array() ]).optional(),
-  doc_id: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
   item_id: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
+  doc_id: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
   checked: z.union([ z.lazy(() => IntNullableWithAggregatesFilterSchema),z.number() ]).optional().nullable(),
   task: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
 }).strict();
@@ -456,8 +430,7 @@ export const TestdocumentCreateInputSchema: z.ZodType<Prisma.TestdocumentCreateI
   y_position: z.number().int().gte(-2147483648).lte(2147483647).optional().nullable(),
   width: z.number().int().gte(-2147483648).lte(2147483647).optional().nullable(),
   height: z.number().int().gte(-2147483648).lte(2147483647).optional().nullable(),
-  images: z.lazy(() => ImagesCreateNestedOneWithoutTestdocumentInputSchema).optional(),
-  todolist: z.lazy(() => TodolistCreateNestedManyWithoutTestdocumentInputSchema).optional()
+  images: z.lazy(() => ImagesCreateNestedOneWithoutTestdocumentInputSchema).optional()
 }).strict();
 
 export const TestdocumentUncheckedCreateInputSchema: z.ZodType<Prisma.TestdocumentUncheckedCreateInput> = z.object({
@@ -469,8 +442,7 @@ export const TestdocumentUncheckedCreateInputSchema: z.ZodType<Prisma.Testdocume
   y_position: z.number().int().gte(-2147483648).lte(2147483647).optional().nullable(),
   width: z.number().int().gte(-2147483648).lte(2147483647).optional().nullable(),
   height: z.number().int().gte(-2147483648).lte(2147483647).optional().nullable(),
-  images: z.lazy(() => ImagesUncheckedCreateNestedOneWithoutTestdocumentInputSchema).optional(),
-  todolist: z.lazy(() => TodolistUncheckedCreateNestedManyWithoutTestdocumentInputSchema).optional()
+  images: z.lazy(() => ImagesUncheckedCreateNestedOneWithoutTestdocumentInputSchema).optional()
 }).strict();
 
 export const TestdocumentUpdateInputSchema: z.ZodType<Prisma.TestdocumentUpdateInput> = z.object({
@@ -482,8 +454,7 @@ export const TestdocumentUpdateInputSchema: z.ZodType<Prisma.TestdocumentUpdateI
   y_position: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   width: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   height: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  images: z.lazy(() => ImagesUpdateOneWithoutTestdocumentNestedInputSchema).optional(),
-  todolist: z.lazy(() => TodolistUpdateManyWithoutTestdocumentNestedInputSchema).optional()
+  images: z.lazy(() => ImagesUpdateOneWithoutTestdocumentNestedInputSchema).optional()
 }).strict();
 
 export const TestdocumentUncheckedUpdateInputSchema: z.ZodType<Prisma.TestdocumentUncheckedUpdateInput> = z.object({
@@ -495,8 +466,7 @@ export const TestdocumentUncheckedUpdateInputSchema: z.ZodType<Prisma.Testdocume
   y_position: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   width: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   height: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  images: z.lazy(() => ImagesUncheckedUpdateOneWithoutTestdocumentNestedInputSchema).optional(),
-  todolist: z.lazy(() => TodolistUncheckedUpdateManyWithoutTestdocumentNestedInputSchema).optional()
+  images: z.lazy(() => ImagesUncheckedUpdateOneWithoutTestdocumentNestedInputSchema).optional()
 }).strict();
 
 export const TestdocumentCreateManyInputSchema: z.ZodType<Prisma.TestdocumentCreateManyInput> = z.object({
@@ -534,48 +504,49 @@ export const TestdocumentUncheckedUpdateManyInputSchema: z.ZodType<Prisma.Testdo
 
 export const TodolistCreateInputSchema: z.ZodType<Prisma.TodolistCreateInput> = z.object({
   item_id: z.number().int().gte(-2147483648).lte(2147483647),
+  doc_id: z.number().int().gte(-2147483648).lte(2147483647),
   checked: z.number().int().gte(-2147483648).lte(2147483647).optional().nullable(),
-  task: z.string().optional().nullable(),
-  testdocument: z.lazy(() => TestdocumentCreateNestedOneWithoutTodolistInputSchema)
+  task: z.string().optional().nullable()
 }).strict();
 
 export const TodolistUncheckedCreateInputSchema: z.ZodType<Prisma.TodolistUncheckedCreateInput> = z.object({
-  doc_id: z.number().int().gte(-2147483648).lte(2147483647),
   item_id: z.number().int().gte(-2147483648).lte(2147483647),
+  doc_id: z.number().int().gte(-2147483648).lte(2147483647),
   checked: z.number().int().gte(-2147483648).lte(2147483647).optional().nullable(),
   task: z.string().optional().nullable()
 }).strict();
 
 export const TodolistUpdateInputSchema: z.ZodType<Prisma.TodolistUpdateInput> = z.object({
   item_id: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  doc_id: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   checked: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   task: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  testdocument: z.lazy(() => TestdocumentUpdateOneRequiredWithoutTodolistNestedInputSchema).optional()
 }).strict();
 
 export const TodolistUncheckedUpdateInputSchema: z.ZodType<Prisma.TodolistUncheckedUpdateInput> = z.object({
-  doc_id: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   item_id: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  doc_id: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   checked: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   task: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const TodolistCreateManyInputSchema: z.ZodType<Prisma.TodolistCreateManyInput> = z.object({
-  doc_id: z.number().int().gte(-2147483648).lte(2147483647),
   item_id: z.number().int().gte(-2147483648).lte(2147483647),
+  doc_id: z.number().int().gte(-2147483648).lte(2147483647),
   checked: z.number().int().gte(-2147483648).lte(2147483647).optional().nullable(),
   task: z.string().optional().nullable()
 }).strict();
 
 export const TodolistUpdateManyMutationInputSchema: z.ZodType<Prisma.TodolistUpdateManyMutationInput> = z.object({
   item_id: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  doc_id: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   checked: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   task: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const TodolistUncheckedUpdateManyInputSchema: z.ZodType<Prisma.TodolistUncheckedUpdateManyInput> = z.object({
-  doc_id: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   item_id: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  doc_id: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   checked: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   task: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
@@ -748,16 +719,6 @@ export const ImagesRelationFilterSchema: z.ZodType<Prisma.ImagesRelationFilter> 
   isNot: z.lazy(() => ImagesWhereInputSchema).optional().nullable()
 }).strict();
 
-export const TodolistListRelationFilterSchema: z.ZodType<Prisma.TodolistListRelationFilter> = z.object({
-  every: z.lazy(() => TodolistWhereInputSchema).optional(),
-  some: z.lazy(() => TodolistWhereInputSchema).optional(),
-  none: z.lazy(() => TodolistWhereInputSchema).optional()
-}).strict();
-
-export const TodolistOrderByRelationAggregateInputSchema: z.ZodType<Prisma.TodolistOrderByRelationAggregateInput> = z.object({
-  _count: z.lazy(() => SortOrderSchema).optional()
-}).strict();
-
 export const TestdocumentCountOrderByAggregateInputSchema: z.ZodType<Prisma.TestdocumentCountOrderByAggregateInput> = z.object({
   doc_id: z.lazy(() => SortOrderSchema).optional(),
   experiment_name: z.lazy(() => SortOrderSchema).optional(),
@@ -824,35 +785,35 @@ export const IntNullableWithAggregatesFilterSchema: z.ZodType<Prisma.IntNullable
 }).strict();
 
 export const TodolistCountOrderByAggregateInputSchema: z.ZodType<Prisma.TodolistCountOrderByAggregateInput> = z.object({
-  doc_id: z.lazy(() => SortOrderSchema).optional(),
   item_id: z.lazy(() => SortOrderSchema).optional(),
+  doc_id: z.lazy(() => SortOrderSchema).optional(),
   checked: z.lazy(() => SortOrderSchema).optional(),
   task: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const TodolistAvgOrderByAggregateInputSchema: z.ZodType<Prisma.TodolistAvgOrderByAggregateInput> = z.object({
-  doc_id: z.lazy(() => SortOrderSchema).optional(),
   item_id: z.lazy(() => SortOrderSchema).optional(),
+  doc_id: z.lazy(() => SortOrderSchema).optional(),
   checked: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const TodolistMaxOrderByAggregateInputSchema: z.ZodType<Prisma.TodolistMaxOrderByAggregateInput> = z.object({
-  doc_id: z.lazy(() => SortOrderSchema).optional(),
   item_id: z.lazy(() => SortOrderSchema).optional(),
+  doc_id: z.lazy(() => SortOrderSchema).optional(),
   checked: z.lazy(() => SortOrderSchema).optional(),
   task: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const TodolistMinOrderByAggregateInputSchema: z.ZodType<Prisma.TodolistMinOrderByAggregateInput> = z.object({
-  doc_id: z.lazy(() => SortOrderSchema).optional(),
   item_id: z.lazy(() => SortOrderSchema).optional(),
+  doc_id: z.lazy(() => SortOrderSchema).optional(),
   checked: z.lazy(() => SortOrderSchema).optional(),
   task: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const TodolistSumOrderByAggregateInputSchema: z.ZodType<Prisma.TodolistSumOrderByAggregateInput> = z.object({
-  doc_id: z.lazy(() => SortOrderSchema).optional(),
   item_id: z.lazy(() => SortOrderSchema).optional(),
+  doc_id: z.lazy(() => SortOrderSchema).optional(),
   checked: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
@@ -892,24 +853,10 @@ export const ImagesCreateNestedOneWithoutTestdocumentInputSchema: z.ZodType<Pris
   connect: z.lazy(() => ImagesWhereUniqueInputSchema).optional()
 }).strict();
 
-export const TodolistCreateNestedManyWithoutTestdocumentInputSchema: z.ZodType<Prisma.TodolistCreateNestedManyWithoutTestdocumentInput> = z.object({
-  create: z.union([ z.lazy(() => TodolistCreateWithoutTestdocumentInputSchema),z.lazy(() => TodolistCreateWithoutTestdocumentInputSchema).array(),z.lazy(() => TodolistUncheckedCreateWithoutTestdocumentInputSchema),z.lazy(() => TodolistUncheckedCreateWithoutTestdocumentInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => TodolistCreateOrConnectWithoutTestdocumentInputSchema),z.lazy(() => TodolistCreateOrConnectWithoutTestdocumentInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => TodolistCreateManyTestdocumentInputEnvelopeSchema).optional(),
-  connect: z.union([ z.lazy(() => TodolistWhereUniqueInputSchema),z.lazy(() => TodolistWhereUniqueInputSchema).array() ]).optional(),
-}).strict();
-
 export const ImagesUncheckedCreateNestedOneWithoutTestdocumentInputSchema: z.ZodType<Prisma.ImagesUncheckedCreateNestedOneWithoutTestdocumentInput> = z.object({
   create: z.union([ z.lazy(() => ImagesCreateWithoutTestdocumentInputSchema),z.lazy(() => ImagesUncheckedCreateWithoutTestdocumentInputSchema) ]).optional(),
   connectOrCreate: z.lazy(() => ImagesCreateOrConnectWithoutTestdocumentInputSchema).optional(),
   connect: z.lazy(() => ImagesWhereUniqueInputSchema).optional()
-}).strict();
-
-export const TodolistUncheckedCreateNestedManyWithoutTestdocumentInputSchema: z.ZodType<Prisma.TodolistUncheckedCreateNestedManyWithoutTestdocumentInput> = z.object({
-  create: z.union([ z.lazy(() => TodolistCreateWithoutTestdocumentInputSchema),z.lazy(() => TodolistCreateWithoutTestdocumentInputSchema).array(),z.lazy(() => TodolistUncheckedCreateWithoutTestdocumentInputSchema),z.lazy(() => TodolistUncheckedCreateWithoutTestdocumentInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => TodolistCreateOrConnectWithoutTestdocumentInputSchema),z.lazy(() => TodolistCreateOrConnectWithoutTestdocumentInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => TodolistCreateManyTestdocumentInputEnvelopeSchema).optional(),
-  connect: z.union([ z.lazy(() => TodolistWhereUniqueInputSchema),z.lazy(() => TodolistWhereUniqueInputSchema).array() ]).optional(),
 }).strict();
 
 export const NullableIntFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableIntFieldUpdateOperationsInput> = z.object({
@@ -930,20 +877,6 @@ export const ImagesUpdateOneWithoutTestdocumentNestedInputSchema: z.ZodType<Pris
   update: z.union([ z.lazy(() => ImagesUpdateWithoutTestdocumentInputSchema),z.lazy(() => ImagesUncheckedUpdateWithoutTestdocumentInputSchema) ]).optional(),
 }).strict();
 
-export const TodolistUpdateManyWithoutTestdocumentNestedInputSchema: z.ZodType<Prisma.TodolistUpdateManyWithoutTestdocumentNestedInput> = z.object({
-  create: z.union([ z.lazy(() => TodolistCreateWithoutTestdocumentInputSchema),z.lazy(() => TodolistCreateWithoutTestdocumentInputSchema).array(),z.lazy(() => TodolistUncheckedCreateWithoutTestdocumentInputSchema),z.lazy(() => TodolistUncheckedCreateWithoutTestdocumentInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => TodolistCreateOrConnectWithoutTestdocumentInputSchema),z.lazy(() => TodolistCreateOrConnectWithoutTestdocumentInputSchema).array() ]).optional(),
-  upsert: z.union([ z.lazy(() => TodolistUpsertWithWhereUniqueWithoutTestdocumentInputSchema),z.lazy(() => TodolistUpsertWithWhereUniqueWithoutTestdocumentInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => TodolistCreateManyTestdocumentInputEnvelopeSchema).optional(),
-  set: z.union([ z.lazy(() => TodolistWhereUniqueInputSchema),z.lazy(() => TodolistWhereUniqueInputSchema).array() ]).optional(),
-  disconnect: z.union([ z.lazy(() => TodolistWhereUniqueInputSchema),z.lazy(() => TodolistWhereUniqueInputSchema).array() ]).optional(),
-  delete: z.union([ z.lazy(() => TodolistWhereUniqueInputSchema),z.lazy(() => TodolistWhereUniqueInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => TodolistWhereUniqueInputSchema),z.lazy(() => TodolistWhereUniqueInputSchema).array() ]).optional(),
-  update: z.union([ z.lazy(() => TodolistUpdateWithWhereUniqueWithoutTestdocumentInputSchema),z.lazy(() => TodolistUpdateWithWhereUniqueWithoutTestdocumentInputSchema).array() ]).optional(),
-  updateMany: z.union([ z.lazy(() => TodolistUpdateManyWithWhereWithoutTestdocumentInputSchema),z.lazy(() => TodolistUpdateManyWithWhereWithoutTestdocumentInputSchema).array() ]).optional(),
-  deleteMany: z.union([ z.lazy(() => TodolistScalarWhereInputSchema),z.lazy(() => TodolistScalarWhereInputSchema).array() ]).optional(),
-}).strict();
-
 export const ImagesUncheckedUpdateOneWithoutTestdocumentNestedInputSchema: z.ZodType<Prisma.ImagesUncheckedUpdateOneWithoutTestdocumentNestedInput> = z.object({
   create: z.union([ z.lazy(() => ImagesCreateWithoutTestdocumentInputSchema),z.lazy(() => ImagesUncheckedCreateWithoutTestdocumentInputSchema) ]).optional(),
   connectOrCreate: z.lazy(() => ImagesCreateOrConnectWithoutTestdocumentInputSchema).optional(),
@@ -952,34 +885,6 @@ export const ImagesUncheckedUpdateOneWithoutTestdocumentNestedInputSchema: z.Zod
   delete: z.boolean().optional(),
   connect: z.lazy(() => ImagesWhereUniqueInputSchema).optional(),
   update: z.union([ z.lazy(() => ImagesUpdateWithoutTestdocumentInputSchema),z.lazy(() => ImagesUncheckedUpdateWithoutTestdocumentInputSchema) ]).optional(),
-}).strict();
-
-export const TodolistUncheckedUpdateManyWithoutTestdocumentNestedInputSchema: z.ZodType<Prisma.TodolistUncheckedUpdateManyWithoutTestdocumentNestedInput> = z.object({
-  create: z.union([ z.lazy(() => TodolistCreateWithoutTestdocumentInputSchema),z.lazy(() => TodolistCreateWithoutTestdocumentInputSchema).array(),z.lazy(() => TodolistUncheckedCreateWithoutTestdocumentInputSchema),z.lazy(() => TodolistUncheckedCreateWithoutTestdocumentInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => TodolistCreateOrConnectWithoutTestdocumentInputSchema),z.lazy(() => TodolistCreateOrConnectWithoutTestdocumentInputSchema).array() ]).optional(),
-  upsert: z.union([ z.lazy(() => TodolistUpsertWithWhereUniqueWithoutTestdocumentInputSchema),z.lazy(() => TodolistUpsertWithWhereUniqueWithoutTestdocumentInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => TodolistCreateManyTestdocumentInputEnvelopeSchema).optional(),
-  set: z.union([ z.lazy(() => TodolistWhereUniqueInputSchema),z.lazy(() => TodolistWhereUniqueInputSchema).array() ]).optional(),
-  disconnect: z.union([ z.lazy(() => TodolistWhereUniqueInputSchema),z.lazy(() => TodolistWhereUniqueInputSchema).array() ]).optional(),
-  delete: z.union([ z.lazy(() => TodolistWhereUniqueInputSchema),z.lazy(() => TodolistWhereUniqueInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => TodolistWhereUniqueInputSchema),z.lazy(() => TodolistWhereUniqueInputSchema).array() ]).optional(),
-  update: z.union([ z.lazy(() => TodolistUpdateWithWhereUniqueWithoutTestdocumentInputSchema),z.lazy(() => TodolistUpdateWithWhereUniqueWithoutTestdocumentInputSchema).array() ]).optional(),
-  updateMany: z.union([ z.lazy(() => TodolistUpdateManyWithWhereWithoutTestdocumentInputSchema),z.lazy(() => TodolistUpdateManyWithWhereWithoutTestdocumentInputSchema).array() ]).optional(),
-  deleteMany: z.union([ z.lazy(() => TodolistScalarWhereInputSchema),z.lazy(() => TodolistScalarWhereInputSchema).array() ]).optional(),
-}).strict();
-
-export const TestdocumentCreateNestedOneWithoutTodolistInputSchema: z.ZodType<Prisma.TestdocumentCreateNestedOneWithoutTodolistInput> = z.object({
-  create: z.union([ z.lazy(() => TestdocumentCreateWithoutTodolistInputSchema),z.lazy(() => TestdocumentUncheckedCreateWithoutTodolistInputSchema) ]).optional(),
-  connectOrCreate: z.lazy(() => TestdocumentCreateOrConnectWithoutTodolistInputSchema).optional(),
-  connect: z.lazy(() => TestdocumentWhereUniqueInputSchema).optional()
-}).strict();
-
-export const TestdocumentUpdateOneRequiredWithoutTodolistNestedInputSchema: z.ZodType<Prisma.TestdocumentUpdateOneRequiredWithoutTodolistNestedInput> = z.object({
-  create: z.union([ z.lazy(() => TestdocumentCreateWithoutTodolistInputSchema),z.lazy(() => TestdocumentUncheckedCreateWithoutTodolistInputSchema) ]).optional(),
-  connectOrCreate: z.lazy(() => TestdocumentCreateOrConnectWithoutTodolistInputSchema).optional(),
-  upsert: z.lazy(() => TestdocumentUpsertWithoutTodolistInputSchema).optional(),
-  connect: z.lazy(() => TestdocumentWhereUniqueInputSchema).optional(),
-  update: z.union([ z.lazy(() => TestdocumentUpdateWithoutTodolistInputSchema),z.lazy(() => TestdocumentUncheckedUpdateWithoutTodolistInputSchema) ]).optional(),
 }).strict();
 
 export const NestedIntFilterSchema: z.ZodType<Prisma.NestedIntFilter> = z.object({
@@ -1128,8 +1033,7 @@ export const TestdocumentCreateWithoutImagesInputSchema: z.ZodType<Prisma.Testdo
   x_position: z.number().optional().nullable(),
   y_position: z.number().optional().nullable(),
   width: z.number().optional().nullable(),
-  height: z.number().optional().nullable(),
-  todolist: z.lazy(() => TodolistCreateNestedManyWithoutTestdocumentInputSchema).optional()
+  height: z.number().optional().nullable()
 }).strict();
 
 export const TestdocumentUncheckedCreateWithoutImagesInputSchema: z.ZodType<Prisma.TestdocumentUncheckedCreateWithoutImagesInput> = z.object({
@@ -1140,8 +1044,7 @@ export const TestdocumentUncheckedCreateWithoutImagesInputSchema: z.ZodType<Pris
   x_position: z.number().optional().nullable(),
   y_position: z.number().optional().nullable(),
   width: z.number().optional().nullable(),
-  height: z.number().optional().nullable(),
-  todolist: z.lazy(() => TodolistUncheckedCreateNestedManyWithoutTestdocumentInputSchema).optional()
+  height: z.number().optional().nullable()
 }).strict();
 
 export const TestdocumentCreateOrConnectWithoutImagesInputSchema: z.ZodType<Prisma.TestdocumentCreateOrConnectWithoutImagesInput> = z.object({
@@ -1163,7 +1066,6 @@ export const TestdocumentUpdateWithoutImagesInputSchema: z.ZodType<Prisma.Testdo
   y_position: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   width: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   height: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  todolist: z.lazy(() => TodolistUpdateManyWithoutTestdocumentNestedInputSchema).optional()
 }).strict();
 
 export const TestdocumentUncheckedUpdateWithoutImagesInputSchema: z.ZodType<Prisma.TestdocumentUncheckedUpdateWithoutImagesInput> = z.object({
@@ -1175,7 +1077,6 @@ export const TestdocumentUncheckedUpdateWithoutImagesInputSchema: z.ZodType<Pris
   y_position: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   width: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   height: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  todolist: z.lazy(() => TodolistUncheckedUpdateManyWithoutTestdocumentNestedInputSchema).optional()
 }).strict();
 
 export const ImagesCreateWithoutTestdocumentInputSchema: z.ZodType<Prisma.ImagesCreateWithoutTestdocumentInput> = z.object({
@@ -1193,28 +1094,6 @@ export const ImagesCreateOrConnectWithoutTestdocumentInputSchema: z.ZodType<Pris
   create: z.union([ z.lazy(() => ImagesCreateWithoutTestdocumentInputSchema),z.lazy(() => ImagesUncheckedCreateWithoutTestdocumentInputSchema) ]),
 }).strict();
 
-export const TodolistCreateWithoutTestdocumentInputSchema: z.ZodType<Prisma.TodolistCreateWithoutTestdocumentInput> = z.object({
-  item_id: z.number(),
-  checked: z.number().optional().nullable(),
-  task: z.string().optional().nullable()
-}).strict();
-
-export const TodolistUncheckedCreateWithoutTestdocumentInputSchema: z.ZodType<Prisma.TodolistUncheckedCreateWithoutTestdocumentInput> = z.object({
-  item_id: z.number(),
-  checked: z.number().optional().nullable(),
-  task: z.string().optional().nullable()
-}).strict();
-
-export const TodolistCreateOrConnectWithoutTestdocumentInputSchema: z.ZodType<Prisma.TodolistCreateOrConnectWithoutTestdocumentInput> = z.object({
-  where: z.lazy(() => TodolistWhereUniqueInputSchema),
-  create: z.union([ z.lazy(() => TodolistCreateWithoutTestdocumentInputSchema),z.lazy(() => TodolistUncheckedCreateWithoutTestdocumentInputSchema) ]),
-}).strict();
-
-export const TodolistCreateManyTestdocumentInputEnvelopeSchema: z.ZodType<Prisma.TodolistCreateManyTestdocumentInputEnvelope> = z.object({
-  data: z.lazy(() => TodolistCreateManyTestdocumentInputSchema).array(),
-  skipDuplicates: z.boolean().optional()
-}).strict();
-
 export const ImagesUpsertWithoutTestdocumentInputSchema: z.ZodType<Prisma.ImagesUpsertWithoutTestdocumentInput> = z.object({
   update: z.union([ z.lazy(() => ImagesUpdateWithoutTestdocumentInputSchema),z.lazy(() => ImagesUncheckedUpdateWithoutTestdocumentInputSchema) ]),
   create: z.union([ z.lazy(() => ImagesCreateWithoutTestdocumentInputSchema),z.lazy(() => ImagesUncheckedCreateWithoutTestdocumentInputSchema) ]),
@@ -1228,114 +1107,6 @@ export const ImagesUpdateWithoutTestdocumentInputSchema: z.ZodType<Prisma.Images
 export const ImagesUncheckedUpdateWithoutTestdocumentInputSchema: z.ZodType<Prisma.ImagesUncheckedUpdateWithoutTestdocumentInput> = z.object({
   link: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   descr: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-}).strict();
-
-export const TodolistUpsertWithWhereUniqueWithoutTestdocumentInputSchema: z.ZodType<Prisma.TodolistUpsertWithWhereUniqueWithoutTestdocumentInput> = z.object({
-  where: z.lazy(() => TodolistWhereUniqueInputSchema),
-  update: z.union([ z.lazy(() => TodolistUpdateWithoutTestdocumentInputSchema),z.lazy(() => TodolistUncheckedUpdateWithoutTestdocumentInputSchema) ]),
-  create: z.union([ z.lazy(() => TodolistCreateWithoutTestdocumentInputSchema),z.lazy(() => TodolistUncheckedCreateWithoutTestdocumentInputSchema) ]),
-}).strict();
-
-export const TodolistUpdateWithWhereUniqueWithoutTestdocumentInputSchema: z.ZodType<Prisma.TodolistUpdateWithWhereUniqueWithoutTestdocumentInput> = z.object({
-  where: z.lazy(() => TodolistWhereUniqueInputSchema),
-  data: z.union([ z.lazy(() => TodolistUpdateWithoutTestdocumentInputSchema),z.lazy(() => TodolistUncheckedUpdateWithoutTestdocumentInputSchema) ]),
-}).strict();
-
-export const TodolistUpdateManyWithWhereWithoutTestdocumentInputSchema: z.ZodType<Prisma.TodolistUpdateManyWithWhereWithoutTestdocumentInput> = z.object({
-  where: z.lazy(() => TodolistScalarWhereInputSchema),
-  data: z.union([ z.lazy(() => TodolistUpdateManyMutationInputSchema),z.lazy(() => TodolistUncheckedUpdateManyWithoutTodolistInputSchema) ]),
-}).strict();
-
-export const TodolistScalarWhereInputSchema: z.ZodType<Prisma.TodolistScalarWhereInput> = z.object({
-  AND: z.union([ z.lazy(() => TodolistScalarWhereInputSchema),z.lazy(() => TodolistScalarWhereInputSchema).array() ]).optional(),
-  OR: z.lazy(() => TodolistScalarWhereInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => TodolistScalarWhereInputSchema),z.lazy(() => TodolistScalarWhereInputSchema).array() ]).optional(),
-  doc_id: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
-  item_id: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
-  checked: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
-  task: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-}).strict();
-
-export const TestdocumentCreateWithoutTodolistInputSchema: z.ZodType<Prisma.TestdocumentCreateWithoutTodolistInput> = z.object({
-  doc_id: z.number(),
-  experiment_name: z.string(),
-  type: z.string().optional().nullable(),
-  createdtime: z.string(),
-  x_position: z.number().optional().nullable(),
-  y_position: z.number().optional().nullable(),
-  width: z.number().optional().nullable(),
-  height: z.number().optional().nullable(),
-  images: z.lazy(() => ImagesCreateNestedOneWithoutTestdocumentInputSchema).optional()
-}).strict();
-
-export const TestdocumentUncheckedCreateWithoutTodolistInputSchema: z.ZodType<Prisma.TestdocumentUncheckedCreateWithoutTodolistInput> = z.object({
-  doc_id: z.number(),
-  experiment_name: z.string(),
-  type: z.string().optional().nullable(),
-  createdtime: z.string(),
-  x_position: z.number().optional().nullable(),
-  y_position: z.number().optional().nullable(),
-  width: z.number().optional().nullable(),
-  height: z.number().optional().nullable(),
-  images: z.lazy(() => ImagesUncheckedCreateNestedOneWithoutTestdocumentInputSchema).optional()
-}).strict();
-
-export const TestdocumentCreateOrConnectWithoutTodolistInputSchema: z.ZodType<Prisma.TestdocumentCreateOrConnectWithoutTodolistInput> = z.object({
-  where: z.lazy(() => TestdocumentWhereUniqueInputSchema),
-  create: z.union([ z.lazy(() => TestdocumentCreateWithoutTodolistInputSchema),z.lazy(() => TestdocumentUncheckedCreateWithoutTodolistInputSchema) ]),
-}).strict();
-
-export const TestdocumentUpsertWithoutTodolistInputSchema: z.ZodType<Prisma.TestdocumentUpsertWithoutTodolistInput> = z.object({
-  update: z.union([ z.lazy(() => TestdocumentUpdateWithoutTodolistInputSchema),z.lazy(() => TestdocumentUncheckedUpdateWithoutTodolistInputSchema) ]),
-  create: z.union([ z.lazy(() => TestdocumentCreateWithoutTodolistInputSchema),z.lazy(() => TestdocumentUncheckedCreateWithoutTodolistInputSchema) ]),
-}).strict();
-
-export const TestdocumentUpdateWithoutTodolistInputSchema: z.ZodType<Prisma.TestdocumentUpdateWithoutTodolistInput> = z.object({
-  doc_id: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
-  experiment_name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  type: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  createdtime: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  x_position: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  y_position: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  width: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  height: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  images: z.lazy(() => ImagesUpdateOneWithoutTestdocumentNestedInputSchema).optional()
-}).strict();
-
-export const TestdocumentUncheckedUpdateWithoutTodolistInputSchema: z.ZodType<Prisma.TestdocumentUncheckedUpdateWithoutTodolistInput> = z.object({
-  doc_id: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
-  experiment_name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  type: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  createdtime: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  x_position: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  y_position: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  width: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  height: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  images: z.lazy(() => ImagesUncheckedUpdateOneWithoutTestdocumentNestedInputSchema).optional()
-}).strict();
-
-export const TodolistCreateManyTestdocumentInputSchema: z.ZodType<Prisma.TodolistCreateManyTestdocumentInput> = z.object({
-  item_id: z.number().int().gte(-2147483648).lte(2147483647),
-  checked: z.number().int().gte(-2147483648).lte(2147483647).optional().nullable(),
-  task: z.string().optional().nullable()
-}).strict();
-
-export const TodolistUpdateWithoutTestdocumentInputSchema: z.ZodType<Prisma.TodolistUpdateWithoutTestdocumentInput> = z.object({
-  item_id: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
-  checked: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  task: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-}).strict();
-
-export const TodolistUncheckedUpdateWithoutTestdocumentInputSchema: z.ZodType<Prisma.TodolistUncheckedUpdateWithoutTestdocumentInput> = z.object({
-  item_id: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
-  checked: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  task: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-}).strict();
-
-export const TodolistUncheckedUpdateManyWithoutTodolistInputSchema: z.ZodType<Prisma.TodolistUncheckedUpdateManyWithoutTodolistInput> = z.object({
-  item_id: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
-  checked: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  task: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 /////////////////////////////////////////
@@ -1525,36 +1296,33 @@ export const TestdocumentFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.Testdocum
 
 export const TodolistFindFirstArgsSchema: z.ZodType<Prisma.TodolistFindFirstArgs> = z.object({
   select: TodolistSelectSchema.optional(),
-  include: TodolistIncludeSchema.optional(),
   where: TodolistWhereInputSchema.optional(),
   orderBy: z.union([ TodolistOrderByWithRelationInputSchema.array(),TodolistOrderByWithRelationInputSchema ]).optional(),
   cursor: TodolistWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
   distinct: TodolistScalarFieldEnumSchema.array().optional(),
-}).strict() as z.ZodType<Prisma.TodolistFindFirstArgs>
+}).strict() 
 
 export const TodolistFindFirstOrThrowArgsSchema: z.ZodType<Prisma.TodolistFindFirstOrThrowArgs> = z.object({
   select: TodolistSelectSchema.optional(),
-  include: TodolistIncludeSchema.optional(),
   where: TodolistWhereInputSchema.optional(),
   orderBy: z.union([ TodolistOrderByWithRelationInputSchema.array(),TodolistOrderByWithRelationInputSchema ]).optional(),
   cursor: TodolistWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
   distinct: TodolistScalarFieldEnumSchema.array().optional(),
-}).strict() as z.ZodType<Prisma.TodolistFindFirstOrThrowArgs>
+}).strict() 
 
 export const TodolistFindManyArgsSchema: z.ZodType<Prisma.TodolistFindManyArgs> = z.object({
   select: TodolistSelectSchema.optional(),
-  include: TodolistIncludeSchema.optional(),
   where: TodolistWhereInputSchema.optional(),
   orderBy: z.union([ TodolistOrderByWithRelationInputSchema.array(),TodolistOrderByWithRelationInputSchema ]).optional(),
   cursor: TodolistWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
   distinct: TodolistScalarFieldEnumSchema.array().optional(),
-}).strict() as z.ZodType<Prisma.TodolistFindManyArgs>
+}).strict() 
 
 export const TodolistAggregateArgsSchema: z.ZodType<Prisma.TodolistAggregateArgs> = z.object({
   where: TodolistWhereInputSchema.optional(),
@@ -1562,7 +1330,7 @@ export const TodolistAggregateArgsSchema: z.ZodType<Prisma.TodolistAggregateArgs
   cursor: TodolistWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict() as z.ZodType<Prisma.TodolistAggregateArgs>
+}).strict() 
 
 export const TodolistGroupByArgsSchema: z.ZodType<Prisma.TodolistGroupByArgs> = z.object({
   where: TodolistWhereInputSchema.optional(),
@@ -1571,19 +1339,17 @@ export const TodolistGroupByArgsSchema: z.ZodType<Prisma.TodolistGroupByArgs> = 
   having: TodolistScalarWhereWithAggregatesInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict() as z.ZodType<Prisma.TodolistGroupByArgs>
+}).strict() 
 
 export const TodolistFindUniqueArgsSchema: z.ZodType<Prisma.TodolistFindUniqueArgs> = z.object({
   select: TodolistSelectSchema.optional(),
-  include: TodolistIncludeSchema.optional(),
   where: TodolistWhereUniqueInputSchema,
-}).strict() as z.ZodType<Prisma.TodolistFindUniqueArgs>
+}).strict() 
 
 export const TodolistFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.TodolistFindUniqueOrThrowArgs> = z.object({
   select: TodolistSelectSchema.optional(),
-  include: TodolistIncludeSchema.optional(),
   where: TodolistWhereUniqueInputSchema,
-}).strict() as z.ZodType<Prisma.TodolistFindUniqueOrThrowArgs>
+}).strict() 
 
 export const ImagesCreateArgsSchema: z.ZodType<Prisma.ImagesCreateArgs> = z.object({
   select: ImagesSelectSchema.optional(),
@@ -1706,44 +1472,40 @@ export const TestdocumentDeleteManyArgsSchema: z.ZodType<Prisma.TestdocumentDele
 
 export const TodolistCreateArgsSchema: z.ZodType<Prisma.TodolistCreateArgs> = z.object({
   select: TodolistSelectSchema.optional(),
-  include: TodolistIncludeSchema.optional(),
   data: z.union([ TodolistCreateInputSchema,TodolistUncheckedCreateInputSchema ]),
-}).strict() as z.ZodType<Prisma.TodolistCreateArgs>
+}).strict() 
 
 export const TodolistUpsertArgsSchema: z.ZodType<Prisma.TodolistUpsertArgs> = z.object({
   select: TodolistSelectSchema.optional(),
-  include: TodolistIncludeSchema.optional(),
   where: TodolistWhereUniqueInputSchema,
   create: z.union([ TodolistCreateInputSchema,TodolistUncheckedCreateInputSchema ]),
   update: z.union([ TodolistUpdateInputSchema,TodolistUncheckedUpdateInputSchema ]),
-}).strict() as z.ZodType<Prisma.TodolistUpsertArgs>
+}).strict() 
 
 export const TodolistCreateManyArgsSchema: z.ZodType<Prisma.TodolistCreateManyArgs> = z.object({
   data: TodolistCreateManyInputSchema.array(),
   skipDuplicates: z.boolean().optional(),
-}).strict() as z.ZodType<Prisma.TodolistCreateManyArgs>
+}).strict() 
 
 export const TodolistDeleteArgsSchema: z.ZodType<Prisma.TodolistDeleteArgs> = z.object({
   select: TodolistSelectSchema.optional(),
-  include: TodolistIncludeSchema.optional(),
   where: TodolistWhereUniqueInputSchema,
-}).strict() as z.ZodType<Prisma.TodolistDeleteArgs>
+}).strict() 
 
 export const TodolistUpdateArgsSchema: z.ZodType<Prisma.TodolistUpdateArgs> = z.object({
   select: TodolistSelectSchema.optional(),
-  include: TodolistIncludeSchema.optional(),
   data: z.union([ TodolistUpdateInputSchema,TodolistUncheckedUpdateInputSchema ]),
   where: TodolistWhereUniqueInputSchema,
-}).strict() as z.ZodType<Prisma.TodolistUpdateArgs>
+}).strict() 
 
 export const TodolistUpdateManyArgsSchema: z.ZodType<Prisma.TodolistUpdateManyArgs> = z.object({
   data: z.union([ TodolistUpdateManyMutationInputSchema,TodolistUncheckedUpdateManyInputSchema ]),
   where: TodolistWhereInputSchema.optional(),
-}).strict() as z.ZodType<Prisma.TodolistUpdateManyArgs>
+}).strict() 
 
 export const TodolistDeleteManyArgsSchema: z.ZodType<Prisma.TodolistDeleteManyArgs> = z.object({
   where: TodolistWhereInputSchema.optional(),
-}).strict() as z.ZodType<Prisma.TodolistDeleteManyArgs>
+}).strict() 
 
 interface ImagesGetPayload extends HKT {
   readonly _A?: boolean | null | undefined | Prisma.ImagesArgs
@@ -1886,7 +1648,6 @@ export const tableSchemas = {
     ]),
     relations: [
       new Relation("images", "", "", "images", "ImagesToTestdocument", "one"),
-      new Relation("todolist", "", "", "todolist", "TestdocumentToTodolist", "many"),
     ],
     modelSchema: (TestdocumentCreateInputSchema as any)
       .partial()
@@ -1915,11 +1676,11 @@ export const tableSchemas = {
   todolist: {
     fields: new Map([
       [
-        "doc_id",
+        "item_id",
         "INT4"
       ],
       [
-        "item_id",
+        "doc_id",
         "INT4"
       ],
       [
@@ -1932,7 +1693,6 @@ export const tableSchemas = {
       ]
     ]),
     relations: [
-      new Relation("testdocument", "doc_id", "doc_id", "testdocument", "TestdocumentToTodolist", "one"),
     ],
     modelSchema: (TodolistCreateInputSchema as any)
       .partial()
@@ -1953,7 +1713,7 @@ export const tableSchemas = {
     Prisma.TodolistFindFirstArgs['select'],
     Prisma.TodolistFindFirstArgs['where'],
     Prisma.TodolistFindUniqueArgs['where'],
-    Omit<Prisma.TodolistInclude, '_count'>,
+    never,
     Prisma.TodolistFindFirstArgs['orderBy'],
     Prisma.TodolistScalarFieldEnum,
     TodolistGetPayload

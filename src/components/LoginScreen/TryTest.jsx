@@ -28,8 +28,7 @@ import { toast } from 'react-toastify';
 //import 'react-toastify/dist/ReactToastify.css';
 import { useErrorBoundary } from 'react-error-boundary';
 const TryTest = () => {
-    console.log('Came here');
-
+  
     return(
         <div>
             <h1> heyy</h1>

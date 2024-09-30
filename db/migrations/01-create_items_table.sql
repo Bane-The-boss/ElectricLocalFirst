@@ -36,11 +36,10 @@ CREATE TABLE IF NOT EXISTS images (
 );
 
 CREATE TABLE IF NOT EXISTS todolist(
+  item_id integer PRIMARY KEY NOT NULL,
   doc_id integer NOT NULL, 
-  item_id integer PRIMARY KEY NOT NULL, 
   checked integer , 
-  task text,
-  FOREIGN KEY (doc_id) REFERENCES testdocument(doc_id) ON DELETE CASCADE
+  task text
 );
 
 

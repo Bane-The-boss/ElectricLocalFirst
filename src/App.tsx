@@ -12,6 +12,7 @@ import WorkComponent from './components/WorkComponent/WorkComponent'
 import   TryTest  from './components/LoginScreen/TryTest' 
 import React, { useState, useEffect } from 'react';
 import {DndContext, closestCorners} from "@dnd-kit/core";
+import { DndProvider } from 'react-dnd';
 export default function App() {
 
   return (
@@ -19,17 +20,18 @@ export default function App() {
       <header className="App-header">
        
         <ElectricProvider>
-          <DndContext collisionDetection={closestCorners}></DndContext>
+         
           <Router>
           <Routes>
                     <Route path={'/'} element={<LoginScreen/>}/>
                     <Route path='/board' element={<BoardTopBar/>}/>
-                    <Route path='/TodoList/:renderTool' element={<WorkComponent/>}/>
+                    <Route path='/TodoList/:renderTool' element={<DndContext collisionDetection={closestCorners}><WorkComponent/></DndContext>}/>
                     <Route path='/document' element={<Document/>}/>
                     <Route path='/imageWidget/:renderTool' element={<WorkComponent/>}/>
 
           </Routes>
           </Router>
+          
         </ElectricProvider>
        
       </header>

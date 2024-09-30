@@ -79,11 +79,11 @@ export type Todolist = {
   /**
    * @zod.number.int().gte(-2147483648).lte(2147483647)
    */
-  doc_id: number
+  item_id: number
   /**
    * @zod.number.int().gte(-2147483648).lte(2147483647)
    */
-  item_id: number
+  doc_id: number
   /**
    * @zod.number.int().gte(-2147483648).lte(2147483647)
    */
@@ -898,49 +898,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
   /**
    * Count Types
    */
-
-
-  /**
-   * Count Type TestdocumentCountOutputType
-   */
-
-
-  export type TestdocumentCountOutputType = {
-    todolist: number
-  }
-
-  export type TestdocumentCountOutputTypeSelect = {
-    todolist?: boolean
-  }
-
-  export type TestdocumentCountOutputTypeGetPayload<S extends boolean | null | undefined | TestdocumentCountOutputTypeArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? TestdocumentCountOutputType :
-    S extends undefined ? never :
-    S extends { include: any } & (TestdocumentCountOutputTypeArgs)
-    ? TestdocumentCountOutputType 
-    : S extends { select: any } & (TestdocumentCountOutputTypeArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-    P extends keyof TestdocumentCountOutputType ? TestdocumentCountOutputType[P] : never
-  } 
-      : TestdocumentCountOutputType
-
-
-
-
-  // Custom InputTypes
-
-  /**
-   * TestdocumentCountOutputType without action
-   */
-  export type TestdocumentCountOutputTypeArgs = {
-    /**
-     * Select specific fields to fetch from the TestdocumentCountOutputType
-     * 
-    **/
-    select?: TestdocumentCountOutputTypeSelect | null
-  }
 
 
 
@@ -3151,15 +3108,11 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     width?: boolean
     height?: boolean
     images?: boolean | ImagesArgs
-    todolist?: boolean | Testdocument$todolistArgs
-    _count?: boolean | TestdocumentCountOutputTypeArgs
   }
 
 
   export type TestdocumentInclude = {
     images?: boolean | ImagesArgs
-    todolist?: boolean | Testdocument$todolistArgs
-    _count?: boolean | TestdocumentCountOutputTypeArgs
   } 
 
   export type TestdocumentGetPayload<S extends boolean | null | undefined | TestdocumentArgs> =
@@ -3169,16 +3122,12 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     S extends { include: any } & (TestdocumentArgs | TestdocumentFindManyArgs)
     ? Testdocument  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'images' ? ImagesGetPayload<S['include'][P]> | null :
-        P extends 'todolist' ? Array < TodolistGetPayload<S['include'][P]>>  :
-        P extends '_count' ? TestdocumentCountOutputTypeGetPayload<S['include'][P]> :  never
+        P extends 'images' ? ImagesGetPayload<S['include'][P]> | null :  never
   } 
     : S extends { select: any } & (TestdocumentArgs | TestdocumentFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'images' ? ImagesGetPayload<S['select'][P]> | null :
-        P extends 'todolist' ? Array < TodolistGetPayload<S['select'][P]>>  :
-        P extends '_count' ? TestdocumentCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Testdocument ? Testdocument[P] : never
+        P extends 'images' ? ImagesGetPayload<S['select'][P]> | null :  P extends keyof Testdocument ? Testdocument[P] : never
   } 
       : Testdocument
 
@@ -3553,8 +3502,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
 
     images<T extends ImagesArgs= {}>(args?: Subset<T, ImagesArgs>): Prisma__ImagesClient<ImagesGetPayload<T> | Null>;
-
-    todolist<T extends Testdocument$todolistArgs= {}>(args?: Subset<T, Testdocument$todolistArgs>): PrismaPromise<Array<TodolistGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -3960,29 +3907,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
 
 
   /**
-   * Testdocument.todolist
-   */
-  export type Testdocument$todolistArgs = {
-    /**
-     * Select specific fields to fetch from the Todolist
-     * 
-    **/
-    select?: TodolistSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: TodolistInclude | null
-    where?: TodolistWhereInput
-    orderBy?: Enumerable<TodolistOrderByWithRelationInput>
-    cursor?: TodolistWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<TodolistScalarFieldEnum>
-  }
-
-
-  /**
    * Testdocument without action
    */
   export type TestdocumentArgs = {
@@ -4014,34 +3938,34 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
   }
 
   export type TodolistAvgAggregateOutputType = {
-    doc_id: number | null
     item_id: number | null
+    doc_id: number | null
     checked: number | null
   }
 
   export type TodolistSumAggregateOutputType = {
-    doc_id: number | null
     item_id: number | null
+    doc_id: number | null
     checked: number | null
   }
 
   export type TodolistMinAggregateOutputType = {
-    doc_id: number | null
     item_id: number | null
+    doc_id: number | null
     checked: number | null
     task: string | null
   }
 
   export type TodolistMaxAggregateOutputType = {
-    doc_id: number | null
     item_id: number | null
+    doc_id: number | null
     checked: number | null
     task: string | null
   }
 
   export type TodolistCountAggregateOutputType = {
-    doc_id: number
     item_id: number
+    doc_id: number
     checked: number
     task: number
     _all: number
@@ -4049,34 +3973,34 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
 
 
   export type TodolistAvgAggregateInputType = {
-    doc_id?: true
     item_id?: true
+    doc_id?: true
     checked?: true
   }
 
   export type TodolistSumAggregateInputType = {
-    doc_id?: true
     item_id?: true
+    doc_id?: true
     checked?: true
   }
 
   export type TodolistMinAggregateInputType = {
-    doc_id?: true
     item_id?: true
+    doc_id?: true
     checked?: true
     task?: true
   }
 
   export type TodolistMaxAggregateInputType = {
-    doc_id?: true
     item_id?: true
+    doc_id?: true
     checked?: true
     task?: true
   }
 
   export type TodolistCountAggregateInputType = {
-    doc_id?: true
     item_id?: true
+    doc_id?: true
     checked?: true
     task?: true
     _all?: true
@@ -4175,8 +4099,8 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
 
 
   export type TodolistGroupByOutputType = {
-    doc_id: number
     item_id: number
+    doc_id: number
     checked: number | null
     task: string | null
     _count: TodolistCountAggregateOutputType | null
@@ -4201,31 +4125,23 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
 
 
   export type TodolistSelect = {
-    doc_id?: boolean
     item_id?: boolean
+    doc_id?: boolean
     checked?: boolean
     task?: boolean
-    testdocument?: boolean | TestdocumentArgs
   }
 
-
-  export type TodolistInclude = {
-    testdocument?: boolean | TestdocumentArgs
-  } 
 
   export type TodolistGetPayload<S extends boolean | null | undefined | TodolistArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? Todolist :
     S extends undefined ? never :
     S extends { include: any } & (TodolistArgs | TodolistFindManyArgs)
-    ? Todolist  & {
-    [P in TruthyKeys<S['include']>]:
-        P extends 'testdocument' ? TestdocumentGetPayload<S['include'][P]> :  never
-  } 
+    ? Todolist 
     : S extends { select: any } & (TodolistArgs | TodolistFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'testdocument' ? TestdocumentGetPayload<S['select'][P]> :  P extends keyof Todolist ? Todolist[P] : never
+    P extends keyof Todolist ? Todolist[P] : never
   } 
       : Todolist
 
@@ -4315,8 +4231,8 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
      * // Get first 10 Todolists
      * const todolists = await prisma.todolist.findMany({ take: 10 })
      * 
-     * // Only select the `doc_id`
-     * const todolistWithDoc_idOnly = await prisma.todolist.findMany({ select: { doc_id: true } })
+     * // Only select the `item_id`
+     * const todolistWithItem_idOnly = await prisma.todolist.findMany({ select: { item_id: true } })
      * 
     **/
     findMany<T extends TodolistFindManyArgs>(
@@ -4599,7 +4515,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
 
-    testdocument<T extends TestdocumentArgs= {}>(args?: Subset<T, TestdocumentArgs>): Prisma__TestdocumentClient<TestdocumentGetPayload<T> | Null>;
 
     private get _document();
     /**
@@ -4638,11 +4553,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     **/
     select?: TodolistSelect | null
     /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: TodolistInclude | null
-    /**
      * Filter, which Todolist to fetch.
      * 
     **/
@@ -4671,11 +4581,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     **/
     select?: TodolistSelect | null
     /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: TodolistInclude | null
-    /**
      * Filter, which Todolist to fetch.
      * 
     **/
@@ -4692,11 +4597,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
      * 
     **/
     select?: TodolistSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: TodolistInclude | null
     /**
      * Filter, which Todolist to fetch.
      * 
@@ -4761,11 +4661,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     **/
     select?: TodolistSelect | null
     /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: TodolistInclude | null
-    /**
      * Filter, which Todolist to fetch.
      * 
     **/
@@ -4818,11 +4713,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     **/
     select?: TodolistSelect | null
     /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: TodolistInclude | null
-    /**
      * Filter, which Todolists to fetch.
      * 
     **/
@@ -4869,11 +4759,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     **/
     select?: TodolistSelect | null
     /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: TodolistInclude | null
-    /**
      * The data needed to create a Todolist.
      * 
     **/
@@ -4903,11 +4788,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
      * 
     **/
     select?: TodolistSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: TodolistInclude | null
     /**
      * The data needed to update a Todolist.
      * 
@@ -4948,11 +4828,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     **/
     select?: TodolistSelect | null
     /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: TodolistInclude | null
-    /**
      * The filter to search for the Todolist to update in case it exists.
      * 
     **/
@@ -4979,11 +4854,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
      * 
     **/
     select?: TodolistSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: TodolistInclude | null
     /**
      * Filter which Todolist to delete.
      * 
@@ -5013,11 +4883,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
      * 
     **/
     select?: TodolistSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     * 
-    **/
-    include?: TodolistInclude | null
   }
 
 
@@ -5078,8 +4943,8 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
 
 
   export const TodolistScalarFieldEnum: {
-    doc_id: 'doc_id',
     item_id: 'item_id',
+    doc_id: 'doc_id',
     checked: 'checked',
     task: 'task'
   };
@@ -5195,7 +5060,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     width?: IntNullableFilter | number | null
     height?: IntNullableFilter | number | null
     images?: XOR<ImagesRelationFilter, ImagesWhereInput> | null
-    todolist?: TodolistListRelationFilter
   }
 
   export type TestdocumentOrderByWithRelationInput = {
@@ -5208,7 +5072,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     width?: SortOrder
     height?: SortOrder
     images?: ImagesOrderByWithRelationInput
-    todolist?: TodolistOrderByRelationAggregateInput
   }
 
   export type TestdocumentWhereUniqueInput = {
@@ -5249,19 +5112,17 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     AND?: Enumerable<TodolistWhereInput>
     OR?: Enumerable<TodolistWhereInput>
     NOT?: Enumerable<TodolistWhereInput>
-    doc_id?: IntFilter | number
     item_id?: IntFilter | number
+    doc_id?: IntFilter | number
     checked?: IntNullableFilter | number | null
     task?: StringNullableFilter | string | null
-    testdocument?: XOR<TestdocumentRelationFilter, TestdocumentWhereInput>
   }
 
   export type TodolistOrderByWithRelationInput = {
-    doc_id?: SortOrder
     item_id?: SortOrder
+    doc_id?: SortOrder
     checked?: SortOrder
     task?: SortOrder
-    testdocument?: TestdocumentOrderByWithRelationInput
   }
 
   export type TodolistWhereUniqueInput = {
@@ -5269,8 +5130,8 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
   }
 
   export type TodolistOrderByWithAggregationInput = {
-    doc_id?: SortOrder
     item_id?: SortOrder
+    doc_id?: SortOrder
     checked?: SortOrder
     task?: SortOrder
     _count?: TodolistCountOrderByAggregateInput
@@ -5284,8 +5145,8 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     AND?: Enumerable<TodolistScalarWhereWithAggregatesInput>
     OR?: Enumerable<TodolistScalarWhereWithAggregatesInput>
     NOT?: Enumerable<TodolistScalarWhereWithAggregatesInput>
-    doc_id?: IntWithAggregatesFilter | number
     item_id?: IntWithAggregatesFilter | number
+    doc_id?: IntWithAggregatesFilter | number
     checked?: IntNullableWithAggregatesFilter | number | null
     task?: StringNullableWithAggregatesFilter | string | null
   }
@@ -5383,7 +5244,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     width?: number | null
     height?: number | null
     images?: ImagesCreateNestedOneWithoutTestdocumentInput
-    todolist?: TodolistCreateNestedManyWithoutTestdocumentInput
   }
 
   export type TestdocumentUncheckedCreateInput = {
@@ -5396,7 +5256,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     width?: number | null
     height?: number | null
     images?: ImagesUncheckedCreateNestedOneWithoutTestdocumentInput
-    todolist?: TodolistUncheckedCreateNestedManyWithoutTestdocumentInput
   }
 
   export type TestdocumentUpdateInput = {
@@ -5409,7 +5268,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     width?: NullableIntFieldUpdateOperationsInput | number | null
     height?: NullableIntFieldUpdateOperationsInput | number | null
     images?: ImagesUpdateOneWithoutTestdocumentNestedInput
-    todolist?: TodolistUpdateManyWithoutTestdocumentNestedInput
   }
 
   export type TestdocumentUncheckedUpdateInput = {
@@ -5422,7 +5280,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     width?: NullableIntFieldUpdateOperationsInput | number | null
     height?: NullableIntFieldUpdateOperationsInput | number | null
     images?: ImagesUncheckedUpdateOneWithoutTestdocumentNestedInput
-    todolist?: TodolistUncheckedUpdateManyWithoutTestdocumentNestedInput
   }
 
   export type TestdocumentCreateManyInput = {
@@ -5460,48 +5317,49 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
 
   export type TodolistCreateInput = {
     item_id: number
+    doc_id: number
     checked?: number | null
     task?: string | null
-    testdocument: TestdocumentCreateNestedOneWithoutTodolistInput
   }
 
   export type TodolistUncheckedCreateInput = {
-    doc_id: number
     item_id: number
+    doc_id: number
     checked?: number | null
     task?: string | null
   }
 
   export type TodolistUpdateInput = {
     item_id?: IntFieldUpdateOperationsInput | number
+    doc_id?: IntFieldUpdateOperationsInput | number
     checked?: NullableIntFieldUpdateOperationsInput | number | null
     task?: NullableStringFieldUpdateOperationsInput | string | null
-    testdocument?: TestdocumentUpdateOneRequiredWithoutTodolistNestedInput
   }
 
   export type TodolistUncheckedUpdateInput = {
-    doc_id?: IntFieldUpdateOperationsInput | number
     item_id?: IntFieldUpdateOperationsInput | number
+    doc_id?: IntFieldUpdateOperationsInput | number
     checked?: NullableIntFieldUpdateOperationsInput | number | null
     task?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TodolistCreateManyInput = {
-    doc_id: number
     item_id: number
+    doc_id: number
     checked?: number | null
     task?: string | null
   }
 
   export type TodolistUpdateManyMutationInput = {
     item_id?: IntFieldUpdateOperationsInput | number
+    doc_id?: IntFieldUpdateOperationsInput | number
     checked?: NullableIntFieldUpdateOperationsInput | number | null
     task?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TodolistUncheckedUpdateManyInput = {
-    doc_id?: IntFieldUpdateOperationsInput | number
     item_id?: IntFieldUpdateOperationsInput | number
+    doc_id?: IntFieldUpdateOperationsInput | number
     checked?: NullableIntFieldUpdateOperationsInput | number | null
     task?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -5674,16 +5532,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     isNot?: ImagesWhereInput | null
   }
 
-  export type TodolistListRelationFilter = {
-    every?: TodolistWhereInput
-    some?: TodolistWhereInput
-    none?: TodolistWhereInput
-  }
-
-  export type TodolistOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type TestdocumentCountOrderByAggregateInput = {
     doc_id?: SortOrder
     experiment_name?: SortOrder
@@ -5750,35 +5598,35 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
   }
 
   export type TodolistCountOrderByAggregateInput = {
-    doc_id?: SortOrder
     item_id?: SortOrder
+    doc_id?: SortOrder
     checked?: SortOrder
     task?: SortOrder
   }
 
   export type TodolistAvgOrderByAggregateInput = {
-    doc_id?: SortOrder
     item_id?: SortOrder
+    doc_id?: SortOrder
     checked?: SortOrder
   }
 
   export type TodolistMaxOrderByAggregateInput = {
-    doc_id?: SortOrder
     item_id?: SortOrder
+    doc_id?: SortOrder
     checked?: SortOrder
     task?: SortOrder
   }
 
   export type TodolistMinOrderByAggregateInput = {
-    doc_id?: SortOrder
     item_id?: SortOrder
+    doc_id?: SortOrder
     checked?: SortOrder
     task?: SortOrder
   }
 
   export type TodolistSumOrderByAggregateInput = {
-    doc_id?: SortOrder
     item_id?: SortOrder
+    doc_id?: SortOrder
     checked?: SortOrder
   }
 
@@ -5818,24 +5666,10 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     connect?: ImagesWhereUniqueInput
   }
 
-  export type TodolistCreateNestedManyWithoutTestdocumentInput = {
-    create?: XOR<Enumerable<TodolistCreateWithoutTestdocumentInput>, Enumerable<TodolistUncheckedCreateWithoutTestdocumentInput>>
-    connectOrCreate?: Enumerable<TodolistCreateOrConnectWithoutTestdocumentInput>
-    createMany?: TodolistCreateManyTestdocumentInputEnvelope
-    connect?: Enumerable<TodolistWhereUniqueInput>
-  }
-
   export type ImagesUncheckedCreateNestedOneWithoutTestdocumentInput = {
     create?: XOR<ImagesCreateWithoutTestdocumentInput, ImagesUncheckedCreateWithoutTestdocumentInput>
     connectOrCreate?: ImagesCreateOrConnectWithoutTestdocumentInput
     connect?: ImagesWhereUniqueInput
-  }
-
-  export type TodolistUncheckedCreateNestedManyWithoutTestdocumentInput = {
-    create?: XOR<Enumerable<TodolistCreateWithoutTestdocumentInput>, Enumerable<TodolistUncheckedCreateWithoutTestdocumentInput>>
-    connectOrCreate?: Enumerable<TodolistCreateOrConnectWithoutTestdocumentInput>
-    createMany?: TodolistCreateManyTestdocumentInputEnvelope
-    connect?: Enumerable<TodolistWhereUniqueInput>
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -5856,20 +5690,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     update?: XOR<ImagesUpdateWithoutTestdocumentInput, ImagesUncheckedUpdateWithoutTestdocumentInput>
   }
 
-  export type TodolistUpdateManyWithoutTestdocumentNestedInput = {
-    create?: XOR<Enumerable<TodolistCreateWithoutTestdocumentInput>, Enumerable<TodolistUncheckedCreateWithoutTestdocumentInput>>
-    connectOrCreate?: Enumerable<TodolistCreateOrConnectWithoutTestdocumentInput>
-    upsert?: Enumerable<TodolistUpsertWithWhereUniqueWithoutTestdocumentInput>
-    createMany?: TodolistCreateManyTestdocumentInputEnvelope
-    set?: Enumerable<TodolistWhereUniqueInput>
-    disconnect?: Enumerable<TodolistWhereUniqueInput>
-    delete?: Enumerable<TodolistWhereUniqueInput>
-    connect?: Enumerable<TodolistWhereUniqueInput>
-    update?: Enumerable<TodolistUpdateWithWhereUniqueWithoutTestdocumentInput>
-    updateMany?: Enumerable<TodolistUpdateManyWithWhereWithoutTestdocumentInput>
-    deleteMany?: Enumerable<TodolistScalarWhereInput>
-  }
-
   export type ImagesUncheckedUpdateOneWithoutTestdocumentNestedInput = {
     create?: XOR<ImagesCreateWithoutTestdocumentInput, ImagesUncheckedCreateWithoutTestdocumentInput>
     connectOrCreate?: ImagesCreateOrConnectWithoutTestdocumentInput
@@ -5878,34 +5698,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     delete?: boolean
     connect?: ImagesWhereUniqueInput
     update?: XOR<ImagesUpdateWithoutTestdocumentInput, ImagesUncheckedUpdateWithoutTestdocumentInput>
-  }
-
-  export type TodolistUncheckedUpdateManyWithoutTestdocumentNestedInput = {
-    create?: XOR<Enumerable<TodolistCreateWithoutTestdocumentInput>, Enumerable<TodolistUncheckedCreateWithoutTestdocumentInput>>
-    connectOrCreate?: Enumerable<TodolistCreateOrConnectWithoutTestdocumentInput>
-    upsert?: Enumerable<TodolistUpsertWithWhereUniqueWithoutTestdocumentInput>
-    createMany?: TodolistCreateManyTestdocumentInputEnvelope
-    set?: Enumerable<TodolistWhereUniqueInput>
-    disconnect?: Enumerable<TodolistWhereUniqueInput>
-    delete?: Enumerable<TodolistWhereUniqueInput>
-    connect?: Enumerable<TodolistWhereUniqueInput>
-    update?: Enumerable<TodolistUpdateWithWhereUniqueWithoutTestdocumentInput>
-    updateMany?: Enumerable<TodolistUpdateManyWithWhereWithoutTestdocumentInput>
-    deleteMany?: Enumerable<TodolistScalarWhereInput>
-  }
-
-  export type TestdocumentCreateNestedOneWithoutTodolistInput = {
-    create?: XOR<TestdocumentCreateWithoutTodolistInput, TestdocumentUncheckedCreateWithoutTodolistInput>
-    connectOrCreate?: TestdocumentCreateOrConnectWithoutTodolistInput
-    connect?: TestdocumentWhereUniqueInput
-  }
-
-  export type TestdocumentUpdateOneRequiredWithoutTodolistNestedInput = {
-    create?: XOR<TestdocumentCreateWithoutTodolistInput, TestdocumentUncheckedCreateWithoutTodolistInput>
-    connectOrCreate?: TestdocumentCreateOrConnectWithoutTodolistInput
-    upsert?: TestdocumentUpsertWithoutTodolistInput
-    connect?: TestdocumentWhereUniqueInput
-    update?: XOR<TestdocumentUpdateWithoutTodolistInput, TestdocumentUncheckedUpdateWithoutTodolistInput>
   }
 
   export type NestedIntFilter = {
@@ -6055,7 +5847,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     y_position?: number | null
     width?: number | null
     height?: number | null
-    todolist?: TodolistCreateNestedManyWithoutTestdocumentInput
   }
 
   export type TestdocumentUncheckedCreateWithoutImagesInput = {
@@ -6067,7 +5858,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     y_position?: number | null
     width?: number | null
     height?: number | null
-    todolist?: TodolistUncheckedCreateNestedManyWithoutTestdocumentInput
   }
 
   export type TestdocumentCreateOrConnectWithoutImagesInput = {
@@ -6089,7 +5879,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     y_position?: NullableIntFieldUpdateOperationsInput | number | null
     width?: NullableIntFieldUpdateOperationsInput | number | null
     height?: NullableIntFieldUpdateOperationsInput | number | null
-    todolist?: TodolistUpdateManyWithoutTestdocumentNestedInput
   }
 
   export type TestdocumentUncheckedUpdateWithoutImagesInput = {
@@ -6101,7 +5890,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     y_position?: NullableIntFieldUpdateOperationsInput | number | null
     width?: NullableIntFieldUpdateOperationsInput | number | null
     height?: NullableIntFieldUpdateOperationsInput | number | null
-    todolist?: TodolistUncheckedUpdateManyWithoutTestdocumentNestedInput
   }
 
   export type ImagesCreateWithoutTestdocumentInput = {
@@ -6119,28 +5907,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     create: XOR<ImagesCreateWithoutTestdocumentInput, ImagesUncheckedCreateWithoutTestdocumentInput>
   }
 
-  export type TodolistCreateWithoutTestdocumentInput = {
-    item_id: number
-    checked?: number | null
-    task?: string | null
-  }
-
-  export type TodolistUncheckedCreateWithoutTestdocumentInput = {
-    item_id: number
-    checked?: number | null
-    task?: string | null
-  }
-
-  export type TodolistCreateOrConnectWithoutTestdocumentInput = {
-    where: TodolistWhereUniqueInput
-    create: XOR<TodolistCreateWithoutTestdocumentInput, TodolistUncheckedCreateWithoutTestdocumentInput>
-  }
-
-  export type TodolistCreateManyTestdocumentInputEnvelope = {
-    data: Enumerable<TodolistCreateManyTestdocumentInput>
-    skipDuplicates?: boolean
-  }
-
   export type ImagesUpsertWithoutTestdocumentInput = {
     update: XOR<ImagesUpdateWithoutTestdocumentInput, ImagesUncheckedUpdateWithoutTestdocumentInput>
     create: XOR<ImagesCreateWithoutTestdocumentInput, ImagesUncheckedCreateWithoutTestdocumentInput>
@@ -6154,114 +5920,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
   export type ImagesUncheckedUpdateWithoutTestdocumentInput = {
     link?: NullableStringFieldUpdateOperationsInput | string | null
     descr?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type TodolistUpsertWithWhereUniqueWithoutTestdocumentInput = {
-    where: TodolistWhereUniqueInput
-    update: XOR<TodolistUpdateWithoutTestdocumentInput, TodolistUncheckedUpdateWithoutTestdocumentInput>
-    create: XOR<TodolistCreateWithoutTestdocumentInput, TodolistUncheckedCreateWithoutTestdocumentInput>
-  }
-
-  export type TodolistUpdateWithWhereUniqueWithoutTestdocumentInput = {
-    where: TodolistWhereUniqueInput
-    data: XOR<TodolistUpdateWithoutTestdocumentInput, TodolistUncheckedUpdateWithoutTestdocumentInput>
-  }
-
-  export type TodolistUpdateManyWithWhereWithoutTestdocumentInput = {
-    where: TodolistScalarWhereInput
-    data: XOR<TodolistUpdateManyMutationInput, TodolistUncheckedUpdateManyWithoutTodolistInput>
-  }
-
-  export type TodolistScalarWhereInput = {
-    AND?: Enumerable<TodolistScalarWhereInput>
-    OR?: Enumerable<TodolistScalarWhereInput>
-    NOT?: Enumerable<TodolistScalarWhereInput>
-    doc_id?: IntFilter | number
-    item_id?: IntFilter | number
-    checked?: IntNullableFilter | number | null
-    task?: StringNullableFilter | string | null
-  }
-
-  export type TestdocumentCreateWithoutTodolistInput = {
-    doc_id: number
-    experiment_name: string
-    type?: string | null
-    createdtime: string
-    x_position?: number | null
-    y_position?: number | null
-    width?: number | null
-    height?: number | null
-    images?: ImagesCreateNestedOneWithoutTestdocumentInput
-  }
-
-  export type TestdocumentUncheckedCreateWithoutTodolistInput = {
-    doc_id: number
-    experiment_name: string
-    type?: string | null
-    createdtime: string
-    x_position?: number | null
-    y_position?: number | null
-    width?: number | null
-    height?: number | null
-    images?: ImagesUncheckedCreateNestedOneWithoutTestdocumentInput
-  }
-
-  export type TestdocumentCreateOrConnectWithoutTodolistInput = {
-    where: TestdocumentWhereUniqueInput
-    create: XOR<TestdocumentCreateWithoutTodolistInput, TestdocumentUncheckedCreateWithoutTodolistInput>
-  }
-
-  export type TestdocumentUpsertWithoutTodolistInput = {
-    update: XOR<TestdocumentUpdateWithoutTodolistInput, TestdocumentUncheckedUpdateWithoutTodolistInput>
-    create: XOR<TestdocumentCreateWithoutTodolistInput, TestdocumentUncheckedCreateWithoutTodolistInput>
-  }
-
-  export type TestdocumentUpdateWithoutTodolistInput = {
-    doc_id?: IntFieldUpdateOperationsInput | number
-    experiment_name?: StringFieldUpdateOperationsInput | string
-    type?: NullableStringFieldUpdateOperationsInput | string | null
-    createdtime?: StringFieldUpdateOperationsInput | string
-    x_position?: NullableIntFieldUpdateOperationsInput | number | null
-    y_position?: NullableIntFieldUpdateOperationsInput | number | null
-    width?: NullableIntFieldUpdateOperationsInput | number | null
-    height?: NullableIntFieldUpdateOperationsInput | number | null
-    images?: ImagesUpdateOneWithoutTestdocumentNestedInput
-  }
-
-  export type TestdocumentUncheckedUpdateWithoutTodolistInput = {
-    doc_id?: IntFieldUpdateOperationsInput | number
-    experiment_name?: StringFieldUpdateOperationsInput | string
-    type?: NullableStringFieldUpdateOperationsInput | string | null
-    createdtime?: StringFieldUpdateOperationsInput | string
-    x_position?: NullableIntFieldUpdateOperationsInput | number | null
-    y_position?: NullableIntFieldUpdateOperationsInput | number | null
-    width?: NullableIntFieldUpdateOperationsInput | number | null
-    height?: NullableIntFieldUpdateOperationsInput | number | null
-    images?: ImagesUncheckedUpdateOneWithoutTestdocumentNestedInput
-  }
-
-  export type TodolistCreateManyTestdocumentInput = {
-    item_id: number
-    checked?: number | null
-    task?: string | null
-  }
-
-  export type TodolistUpdateWithoutTestdocumentInput = {
-    item_id?: IntFieldUpdateOperationsInput | number
-    checked?: NullableIntFieldUpdateOperationsInput | number | null
-    task?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type TodolistUncheckedUpdateWithoutTestdocumentInput = {
-    item_id?: IntFieldUpdateOperationsInput | number
-    checked?: NullableIntFieldUpdateOperationsInput | number | null
-    task?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type TodolistUncheckedUpdateManyWithoutTodolistInput = {
-    item_id?: IntFieldUpdateOperationsInput | number
-    checked?: NullableIntFieldUpdateOperationsInput | number | null
-    task?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

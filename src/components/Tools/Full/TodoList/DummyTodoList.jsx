@@ -11,8 +11,8 @@ const TodoList = (props) => {
     const { db } = useElectric();
 
     const [taskTexts, setTaskTexts] = useState({});
-    const [dataList, setDataList] = useState([]);
-    const [fetchedItems, setFetchedItems] = useState([]);
+    const [allItems, setAllItems] = useState([]);
+
 
     useEffect(() => {
         const syncItems = async () => {
@@ -21,28 +21,18 @@ const TodoList = (props) => {
         };
 
         syncItems();
-    }, [db]);
+    }, []);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                if (document_id) {
-                    const result1 = await db.todolist.findMany({
+                    const {results} = useLiveQuery( db.todolist.findMany({
                         where: { doc_id: document_id },
-                    });
-                    setFetchedItems(result1);      
-                }
-            } catch (err) {
-                console.error('Error fetching data:', err);
-            }
-        };
+                    }));
+                    
 
-        fetchData();
-    }, [document_id, db]);
+        
 
-    useEffect(() => {
-       if (fetchedItems) setDataList(fetchedItems);
-   }, [fetchedItems]);
+                    useEffect(() => {
+                        setAllItems(results);
+                     }, [results]);
 
     const changeText = (item, text) => {
         setTaskTexts((prev) => ({
@@ -51,18 +41,8 @@ const TodoList = (props) => {
         }));
     };
 
-
-    const { results } = useLiveQuery(
-        db.todolist.liveMany({
-          where: { doc_id: document_id }
-          
-        }
-      ));
-
-      console.log('results are ', results);
-
+  
     const updateItem = async (checkFlagOrText, itemId, operation) => {
-
         let value1 = checkFlagOrText;
         const parsedIndex = parseInt(itemId, 10);
         if (isNaN(parsedIndex)) {
@@ -75,7 +55,6 @@ const TodoList = (props) => {
             where: { item_id: parsedIndex },
         });
 
-
         if (!isEntryPresent && operation === 'task') {
             await db.todolist.create({
                 data: {
@@ -85,30 +64,21 @@ const TodoList = (props) => {
                     checked: 0,
                 },
             });
+
         } else {
             
             if (operation === 'checked') {
                 value1 = checkFlagOrText === 0 ? 1 : 0;
             }
-
-            try {
-                await db.todolist.update({
-                    where: { item_id: parsedIndex }, // Locate the item by `item_id`
-                    data: { [operation]: value1 },  // Only update the relevant field (`task` or `checked`)
-                });
-                console.log('data changed item updated', Date.now());
-               
-            } catch (err) {
-                console.error('Error updating:', err);
-            }
-
+      
+            await db.todolist.update({
+                where: { item_id: parsedIndex },
+                data: { [operation]: value1 },
+            });
+          
         }
 
-    //     setDataList((prevDataList) =>
-    //     prevDataList.map((item) =>
-    //         item.item_id === parsedIndex ? { ...item, [operation]: value1 } : item
-    //     )
-    // );
+    
     };
 
     const removeListitem = async (itemId) => {
@@ -117,31 +87,24 @@ const TodoList = (props) => {
             await db.todolist.delete({
                 where: { item_id: parsedIndex },
             });
-
             // Update the state to remove the item and trigger rerender
-            //setDataList((prev) => prev.filter((item) => item.item_id !== itemId));
+            
         } catch (err) {
             console.error('Error removing item:', err);
         }
     };
 
     async function addItemInList() {
-        await db.todolist.create({
-            data: {
-                doc_id: document_id,
-                item_id: generatePseudoRandomId(),
-                task: ' ',
-                checked: 0,
-            },
-        });
+        const newObj = { item_id: generatePseudoRandomId(), task: ' ', checked: 0 };
         
     }
 
+
     return (
-        <Box style={{ backgroundColor: 'lightblue',height: '100%' }}>
-            <span>document id is {document_id}  </span>
+        <Box style={{ backgroundColor: 'lightblue' }}>
+            <span>document id is {document_id} heyy</span>
             <List style={{ height: '100%', width: '80%', margin: '0 auto' }}>
-                {results?.map((item) => (
+                {demmyTodos?.map((item) => (
                     <React.Fragment key={item.item_id}>
                         <ListItem key={item.item_id} role={undefined}>
                             <ListItemIcon>
@@ -149,9 +112,10 @@ const TodoList = (props) => {
                                     inputProps={{ 'data-testid': 'todoCheckeboxInput' }}
                                     edge="start"
                                     checked={item.checked===1}
-                                    tabIndex={-1}
+                                    //tabIndex={-1}
                                     onClick={() => {
                                         try {
+                                            console.log('logggged ', item.item_id);
                                             updateItem(item.checked, item.item_id, 'checked');
                                         } catch (err) {
                                             console.error('Error updating checkbox:', err);
@@ -165,12 +129,19 @@ const TodoList = (props) => {
                                     width: '80%',
                                     backgroundColor: 'lavender',
                                 }}
-                                value={ item.task || ' '}
+                                value={taskTexts[item.item_id] !== undefined ? taskTexts[item.item_id] : item.task || ''}
                                 onChange={(e) => {
+                                    try {
+                                        changeText(item, e.target.value);
+                                    } catch (err) {
+                                        console.error('Error changing text:', err);
+                                    }
+                                }}
+                                onBlur={(e) => {
                                     try {
                                         updateItem(e.target.value, item.item_id, 'task');
                                     } catch (err) {
-                                        console.error('Error changing text:', err);
+                                        console.error('Error updating task:', err);
                                     }
                                 }}
                             />

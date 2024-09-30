@@ -11,8 +11,10 @@ const transform = `translate3d(${left}px, ${top}px, 0) scale(${scale})`;    retu
         padding :0, 
         border: '1px solid black',
         boxSizing: 'border-box',
-        backgroundColor: 'rgba(255, 0, 0, 0.1)',
-        opacity: isDragging? 0.5 : 1 
+        backgroundColor: 'lightblue',
+        opacity: isDragging? 0.5 : 1 ,
+        cursor: 'move',
+        zIndex: isDragging ? 1000 : 'auto',
     };
  };
 
