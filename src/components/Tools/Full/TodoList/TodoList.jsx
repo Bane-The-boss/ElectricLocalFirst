@@ -17,7 +17,9 @@ const TodoList = (props) => {
     useEffect(() => {
         const syncItems = async () => {
             const shape = await db.todolist.sync();
+           // const shape1 = await db.todolist1.sync();
             await shape.synced;
+            //await shape1.synced;
         };
 
         syncItems();
@@ -59,7 +61,7 @@ const TodoList = (props) => {
         }
       ));
 
-      console.log('results are ', results);
+      console.log('results are ------------------', results);
 
     const updateItem = async (checkFlagOrText, itemId, operation) => {
 
@@ -77,6 +79,14 @@ const TodoList = (props) => {
 
 
         if (!isEntryPresent && operation === 'task') {
+            console.log('came here');
+            await db.todolist1.create({
+                data: {
+                    doc_id: document_id,
+                    item_id: parsedIndex,
+                    task: checkFlagOrText,
+                    checked: 0,
+                }}),
             await db.todolist.create({
                 data: {
                     doc_id: document_id,
@@ -126,6 +136,13 @@ const TodoList = (props) => {
     };
 
     async function addItemInList() {
+        await db.todolist1.create({
+            data: {
+                doc_id: document_id,
+                item_id: generatePseudoRandomId(),
+                task: ' ',
+                checked: 0,
+            }}),
         await db.todolist.create({
             data: {
                 doc_id: document_id,

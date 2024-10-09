@@ -22,6 +22,8 @@ export const SortOrderSchema = z.enum(['asc','desc']);
 
 export const TestdocumentScalarFieldEnumSchema = z.enum(['doc_id','experiment_name','type','createdtime','x_position','y_position','width','height']);
 
+export const Todolist1ScalarFieldEnumSchema = z.enum(['item_id','doc_id','checked','task']);
+
 export const TodolistScalarFieldEnumSchema = z.enum(['item_id','doc_id','checked','task']);
 
 export const TransactionIsolationLevelSchema = z.enum(['ReadUncommitted','ReadCommitted','RepeatableRead','Serializable']);
@@ -84,6 +86,19 @@ export const TodolistSchema = z.object({
 export type Todolist = z.infer<typeof TodolistSchema>
 
 /////////////////////////////////////////
+// TODOLIST 1 SCHEMA
+/////////////////////////////////////////
+
+export const Todolist1Schema = z.object({
+  item_id: z.number().int().gte(-2147483648).lte(2147483647),
+  doc_id: z.number().int().gte(-2147483648).lte(2147483647),
+  checked: z.number().int().gte(-2147483648).lte(2147483647).nullable(),
+  task: z.string().nullable(),
+})
+
+export type Todolist1 = z.infer<typeof Todolist1Schema>
+
+/////////////////////////////////////////
 // SELECT & INCLUDE
 /////////////////////////////////////////
 
@@ -143,6 +158,16 @@ export const TestdocumentSelectSchema: z.ZodType<Prisma.TestdocumentSelect> = z.
 //------------------------------------------------------
 
 export const TodolistSelectSchema: z.ZodType<Prisma.TodolistSelect> = z.object({
+  item_id: z.boolean().optional(),
+  doc_id: z.boolean().optional(),
+  checked: z.boolean().optional(),
+  task: z.boolean().optional(),
+}).strict()
+
+// TODOLIST 1
+//------------------------------------------------------
+
+export const Todolist1SelectSchema: z.ZodType<Prisma.Todolist1Select> = z.object({
   item_id: z.boolean().optional(),
   doc_id: z.boolean().optional(),
   checked: z.boolean().optional(),
@@ -332,6 +357,49 @@ export const TodolistScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Todo
   AND: z.union([ z.lazy(() => TodolistScalarWhereWithAggregatesInputSchema),z.lazy(() => TodolistScalarWhereWithAggregatesInputSchema).array() ]).optional(),
   OR: z.lazy(() => TodolistScalarWhereWithAggregatesInputSchema).array().optional(),
   NOT: z.union([ z.lazy(() => TodolistScalarWhereWithAggregatesInputSchema),z.lazy(() => TodolistScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  item_id: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
+  doc_id: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
+  checked: z.union([ z.lazy(() => IntNullableWithAggregatesFilterSchema),z.number() ]).optional().nullable(),
+  task: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+}).strict();
+
+export const Todolist1WhereInputSchema: z.ZodType<Prisma.Todolist1WhereInput> = z.object({
+  AND: z.union([ z.lazy(() => Todolist1WhereInputSchema),z.lazy(() => Todolist1WhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => Todolist1WhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => Todolist1WhereInputSchema),z.lazy(() => Todolist1WhereInputSchema).array() ]).optional(),
+  item_id: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
+  doc_id: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
+  checked: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
+  task: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+}).strict();
+
+export const Todolist1OrderByWithRelationInputSchema: z.ZodType<Prisma.Todolist1OrderByWithRelationInput> = z.object({
+  item_id: z.lazy(() => SortOrderSchema).optional(),
+  doc_id: z.lazy(() => SortOrderSchema).optional(),
+  checked: z.lazy(() => SortOrderSchema).optional(),
+  task: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const Todolist1WhereUniqueInputSchema: z.ZodType<Prisma.Todolist1WhereUniqueInput> = z.object({
+  item_id: z.number().int().gte(-2147483648).lte(2147483647).optional()
+}).strict();
+
+export const Todolist1OrderByWithAggregationInputSchema: z.ZodType<Prisma.Todolist1OrderByWithAggregationInput> = z.object({
+  item_id: z.lazy(() => SortOrderSchema).optional(),
+  doc_id: z.lazy(() => SortOrderSchema).optional(),
+  checked: z.lazy(() => SortOrderSchema).optional(),
+  task: z.lazy(() => SortOrderSchema).optional(),
+  _count: z.lazy(() => Todolist1CountOrderByAggregateInputSchema).optional(),
+  _avg: z.lazy(() => Todolist1AvgOrderByAggregateInputSchema).optional(),
+  _max: z.lazy(() => Todolist1MaxOrderByAggregateInputSchema).optional(),
+  _min: z.lazy(() => Todolist1MinOrderByAggregateInputSchema).optional(),
+  _sum: z.lazy(() => Todolist1SumOrderByAggregateInputSchema).optional()
+}).strict();
+
+export const Todolist1ScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Todolist1ScalarWhereWithAggregatesInput> = z.object({
+  AND: z.union([ z.lazy(() => Todolist1ScalarWhereWithAggregatesInputSchema),z.lazy(() => Todolist1ScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  OR: z.lazy(() => Todolist1ScalarWhereWithAggregatesInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => Todolist1ScalarWhereWithAggregatesInputSchema),z.lazy(() => Todolist1ScalarWhereWithAggregatesInputSchema).array() ]).optional(),
   item_id: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
   doc_id: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
   checked: z.union([ z.lazy(() => IntNullableWithAggregatesFilterSchema),z.number() ]).optional().nullable(),
@@ -545,6 +613,55 @@ export const TodolistUpdateManyMutationInputSchema: z.ZodType<Prisma.TodolistUpd
 }).strict();
 
 export const TodolistUncheckedUpdateManyInputSchema: z.ZodType<Prisma.TodolistUncheckedUpdateManyInput> = z.object({
+  item_id: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  doc_id: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  checked: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  task: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const Todolist1CreateInputSchema: z.ZodType<Prisma.Todolist1CreateInput> = z.object({
+  item_id: z.number().int().gte(-2147483648).lte(2147483647),
+  doc_id: z.number().int().gte(-2147483648).lte(2147483647),
+  checked: z.number().int().gte(-2147483648).lte(2147483647).optional().nullable(),
+  task: z.string().optional().nullable()
+}).strict();
+
+export const Todolist1UncheckedCreateInputSchema: z.ZodType<Prisma.Todolist1UncheckedCreateInput> = z.object({
+  item_id: z.number().int().gte(-2147483648).lte(2147483647),
+  doc_id: z.number().int().gte(-2147483648).lte(2147483647),
+  checked: z.number().int().gte(-2147483648).lte(2147483647).optional().nullable(),
+  task: z.string().optional().nullable()
+}).strict();
+
+export const Todolist1UpdateInputSchema: z.ZodType<Prisma.Todolist1UpdateInput> = z.object({
+  item_id: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  doc_id: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  checked: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  task: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const Todolist1UncheckedUpdateInputSchema: z.ZodType<Prisma.Todolist1UncheckedUpdateInput> = z.object({
+  item_id: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  doc_id: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  checked: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  task: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const Todolist1CreateManyInputSchema: z.ZodType<Prisma.Todolist1CreateManyInput> = z.object({
+  item_id: z.number().int().gte(-2147483648).lte(2147483647),
+  doc_id: z.number().int().gte(-2147483648).lte(2147483647),
+  checked: z.number().int().gte(-2147483648).lte(2147483647).optional().nullable(),
+  task: z.string().optional().nullable()
+}).strict();
+
+export const Todolist1UpdateManyMutationInputSchema: z.ZodType<Prisma.Todolist1UpdateManyMutationInput> = z.object({
+  item_id: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  doc_id: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  checked: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  task: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const Todolist1UncheckedUpdateManyInputSchema: z.ZodType<Prisma.Todolist1UncheckedUpdateManyInput> = z.object({
   item_id: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   doc_id: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   checked: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -812,6 +929,39 @@ export const TodolistMinOrderByAggregateInputSchema: z.ZodType<Prisma.TodolistMi
 }).strict();
 
 export const TodolistSumOrderByAggregateInputSchema: z.ZodType<Prisma.TodolistSumOrderByAggregateInput> = z.object({
+  item_id: z.lazy(() => SortOrderSchema).optional(),
+  doc_id: z.lazy(() => SortOrderSchema).optional(),
+  checked: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const Todolist1CountOrderByAggregateInputSchema: z.ZodType<Prisma.Todolist1CountOrderByAggregateInput> = z.object({
+  item_id: z.lazy(() => SortOrderSchema).optional(),
+  doc_id: z.lazy(() => SortOrderSchema).optional(),
+  checked: z.lazy(() => SortOrderSchema).optional(),
+  task: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const Todolist1AvgOrderByAggregateInputSchema: z.ZodType<Prisma.Todolist1AvgOrderByAggregateInput> = z.object({
+  item_id: z.lazy(() => SortOrderSchema).optional(),
+  doc_id: z.lazy(() => SortOrderSchema).optional(),
+  checked: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const Todolist1MaxOrderByAggregateInputSchema: z.ZodType<Prisma.Todolist1MaxOrderByAggregateInput> = z.object({
+  item_id: z.lazy(() => SortOrderSchema).optional(),
+  doc_id: z.lazy(() => SortOrderSchema).optional(),
+  checked: z.lazy(() => SortOrderSchema).optional(),
+  task: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const Todolist1MinOrderByAggregateInputSchema: z.ZodType<Prisma.Todolist1MinOrderByAggregateInput> = z.object({
+  item_id: z.lazy(() => SortOrderSchema).optional(),
+  doc_id: z.lazy(() => SortOrderSchema).optional(),
+  checked: z.lazy(() => SortOrderSchema).optional(),
+  task: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const Todolist1SumOrderByAggregateInputSchema: z.ZodType<Prisma.Todolist1SumOrderByAggregateInput> = z.object({
   item_id: z.lazy(() => SortOrderSchema).optional(),
   doc_id: z.lazy(() => SortOrderSchema).optional(),
   checked: z.lazy(() => SortOrderSchema).optional()
@@ -1351,6 +1501,63 @@ export const TodolistFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.TodolistFindU
   where: TodolistWhereUniqueInputSchema,
 }).strict() 
 
+export const Todolist1FindFirstArgsSchema: z.ZodType<Prisma.Todolist1FindFirstArgs> = z.object({
+  select: Todolist1SelectSchema.optional(),
+  where: Todolist1WhereInputSchema.optional(),
+  orderBy: z.union([ Todolist1OrderByWithRelationInputSchema.array(),Todolist1OrderByWithRelationInputSchema ]).optional(),
+  cursor: Todolist1WhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: Todolist1ScalarFieldEnumSchema.array().optional(),
+}).strict() 
+
+export const Todolist1FindFirstOrThrowArgsSchema: z.ZodType<Prisma.Todolist1FindFirstOrThrowArgs> = z.object({
+  select: Todolist1SelectSchema.optional(),
+  where: Todolist1WhereInputSchema.optional(),
+  orderBy: z.union([ Todolist1OrderByWithRelationInputSchema.array(),Todolist1OrderByWithRelationInputSchema ]).optional(),
+  cursor: Todolist1WhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: Todolist1ScalarFieldEnumSchema.array().optional(),
+}).strict() 
+
+export const Todolist1FindManyArgsSchema: z.ZodType<Prisma.Todolist1FindManyArgs> = z.object({
+  select: Todolist1SelectSchema.optional(),
+  where: Todolist1WhereInputSchema.optional(),
+  orderBy: z.union([ Todolist1OrderByWithRelationInputSchema.array(),Todolist1OrderByWithRelationInputSchema ]).optional(),
+  cursor: Todolist1WhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: Todolist1ScalarFieldEnumSchema.array().optional(),
+}).strict() 
+
+export const Todolist1AggregateArgsSchema: z.ZodType<Prisma.Todolist1AggregateArgs> = z.object({
+  where: Todolist1WhereInputSchema.optional(),
+  orderBy: z.union([ Todolist1OrderByWithRelationInputSchema.array(),Todolist1OrderByWithRelationInputSchema ]).optional(),
+  cursor: Todolist1WhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+}).strict() 
+
+export const Todolist1GroupByArgsSchema: z.ZodType<Prisma.Todolist1GroupByArgs> = z.object({
+  where: Todolist1WhereInputSchema.optional(),
+  orderBy: z.union([ Todolist1OrderByWithAggregationInputSchema.array(),Todolist1OrderByWithAggregationInputSchema ]).optional(),
+  by: Todolist1ScalarFieldEnumSchema.array(),
+  having: Todolist1ScalarWhereWithAggregatesInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+}).strict() 
+
+export const Todolist1FindUniqueArgsSchema: z.ZodType<Prisma.Todolist1FindUniqueArgs> = z.object({
+  select: Todolist1SelectSchema.optional(),
+  where: Todolist1WhereUniqueInputSchema,
+}).strict() 
+
+export const Todolist1FindUniqueOrThrowArgsSchema: z.ZodType<Prisma.Todolist1FindUniqueOrThrowArgs> = z.object({
+  select: Todolist1SelectSchema.optional(),
+  where: Todolist1WhereUniqueInputSchema,
+}).strict() 
+
 export const ImagesCreateArgsSchema: z.ZodType<Prisma.ImagesCreateArgs> = z.object({
   select: ImagesSelectSchema.optional(),
   include: ImagesIncludeSchema.optional(),
@@ -1507,6 +1714,43 @@ export const TodolistDeleteManyArgsSchema: z.ZodType<Prisma.TodolistDeleteManyAr
   where: TodolistWhereInputSchema.optional(),
 }).strict() 
 
+export const Todolist1CreateArgsSchema: z.ZodType<Prisma.Todolist1CreateArgs> = z.object({
+  select: Todolist1SelectSchema.optional(),
+  data: z.union([ Todolist1CreateInputSchema,Todolist1UncheckedCreateInputSchema ]),
+}).strict() 
+
+export const Todolist1UpsertArgsSchema: z.ZodType<Prisma.Todolist1UpsertArgs> = z.object({
+  select: Todolist1SelectSchema.optional(),
+  where: Todolist1WhereUniqueInputSchema,
+  create: z.union([ Todolist1CreateInputSchema,Todolist1UncheckedCreateInputSchema ]),
+  update: z.union([ Todolist1UpdateInputSchema,Todolist1UncheckedUpdateInputSchema ]),
+}).strict() 
+
+export const Todolist1CreateManyArgsSchema: z.ZodType<Prisma.Todolist1CreateManyArgs> = z.object({
+  data: Todolist1CreateManyInputSchema.array(),
+  skipDuplicates: z.boolean().optional(),
+}).strict() 
+
+export const Todolist1DeleteArgsSchema: z.ZodType<Prisma.Todolist1DeleteArgs> = z.object({
+  select: Todolist1SelectSchema.optional(),
+  where: Todolist1WhereUniqueInputSchema,
+}).strict() 
+
+export const Todolist1UpdateArgsSchema: z.ZodType<Prisma.Todolist1UpdateArgs> = z.object({
+  select: Todolist1SelectSchema.optional(),
+  data: z.union([ Todolist1UpdateInputSchema,Todolist1UncheckedUpdateInputSchema ]),
+  where: Todolist1WhereUniqueInputSchema,
+}).strict() 
+
+export const Todolist1UpdateManyArgsSchema: z.ZodType<Prisma.Todolist1UpdateManyArgs> = z.object({
+  data: z.union([ Todolist1UpdateManyMutationInputSchema,Todolist1UncheckedUpdateManyInputSchema ]),
+  where: Todolist1WhereInputSchema.optional(),
+}).strict() 
+
+export const Todolist1DeleteManyArgsSchema: z.ZodType<Prisma.Todolist1DeleteManyArgs> = z.object({
+  where: Todolist1WhereInputSchema.optional(),
+}).strict() 
+
 interface ImagesGetPayload extends HKT {
   readonly _A?: boolean | null | undefined | Prisma.ImagesArgs
   readonly type: Omit<Prisma.ImagesGetPayload<this['_A']>, "Please either choose `select` or `include`">
@@ -1525,6 +1769,11 @@ interface TestdocumentGetPayload extends HKT {
 interface TodolistGetPayload extends HKT {
   readonly _A?: boolean | null | undefined | Prisma.TodolistArgs
   readonly type: Omit<Prisma.TodolistGetPayload<this['_A']>, "Please either choose `select` or `include`">
+}
+
+interface Todolist1GetPayload extends HKT {
+  readonly _A?: boolean | null | undefined | Prisma.Todolist1Args
+  readonly type: Omit<Prisma.Todolist1GetPayload<this['_A']>, "Please either choose `select` or `include`">
 }
 
 export const tableSchemas = {
@@ -1717,6 +1966,51 @@ export const tableSchemas = {
     Prisma.TodolistFindFirstArgs['orderBy'],
     Prisma.TodolistScalarFieldEnum,
     TodolistGetPayload
+  >,
+  todolist1: {
+    fields: new Map([
+      [
+        "item_id",
+        "INT4"
+      ],
+      [
+        "doc_id",
+        "INT4"
+      ],
+      [
+        "checked",
+        "INT4"
+      ],
+      [
+        "task",
+        "TEXT"
+      ]
+    ]),
+    relations: [
+    ],
+    modelSchema: (Todolist1CreateInputSchema as any)
+      .partial()
+      .or((Todolist1UncheckedCreateInputSchema as any).partial()),
+    createSchema: Todolist1CreateArgsSchema,
+    createManySchema: Todolist1CreateManyArgsSchema,
+    findUniqueSchema: Todolist1FindUniqueArgsSchema,
+    findSchema: Todolist1FindFirstArgsSchema,
+    updateSchema: Todolist1UpdateArgsSchema,
+    updateManySchema: Todolist1UpdateManyArgsSchema,
+    upsertSchema: Todolist1UpsertArgsSchema,
+    deleteSchema: Todolist1DeleteArgsSchema,
+    deleteManySchema: Todolist1DeleteManyArgsSchema
+  } as TableSchema<
+    z.infer<typeof Todolist1UncheckedCreateInputSchema>,
+    Prisma.Todolist1CreateArgs['data'],
+    Prisma.Todolist1UpdateArgs['data'],
+    Prisma.Todolist1FindFirstArgs['select'],
+    Prisma.Todolist1FindFirstArgs['where'],
+    Prisma.Todolist1FindUniqueArgs['where'],
+    never,
+    Prisma.Todolist1FindFirstArgs['orderBy'],
+    Prisma.Todolist1ScalarFieldEnum,
+    Todolist1GetPayload
   >,
 }
 

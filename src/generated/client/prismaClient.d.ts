@@ -91,6 +91,26 @@ export type Todolist = {
   task: string | null
 }
 
+/**
+ * Model Todolist1
+ * 
+ */
+export type Todolist1 = {
+  /**
+   * @zod.number.int().gte(-2147483648).lte(2147483647)
+   */
+  item_id: number
+  /**
+   * @zod.number.int().gte(-2147483648).lte(2147483647)
+   */
+  doc_id: number
+  /**
+   * @zod.number.int().gte(-2147483648).lte(2147483647)
+   */
+  checked: number | null
+  task: string | null
+}
+
 
 /**
  * ##  Prisma Client ʲˢ
@@ -248,6 +268,16 @@ export class PrismaClient<
     * ```
     */
   get todolist(): Prisma.TodolistDelegate<GlobalReject>;
+
+  /**
+   * `prisma.todolist1`: Exposes CRUD operations for the **Todolist1** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Todolist1s
+    * const todolist1s = await prisma.todolist1.findMany()
+    * ```
+    */
+  get todolist1(): Prisma.Todolist1Delegate<GlobalReject>;
 }
 
 export namespace Prisma {
@@ -735,7 +765,8 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     Images: 'Images',
     Random1: 'Random1',
     Testdocument: 'Testdocument',
-    Todolist: 'Todolist'
+    Todolist: 'Todolist',
+    Todolist1: 'Todolist1'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -4888,6 +4919,969 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
 
 
   /**
+   * Model Todolist1
+   */
+
+
+  export type AggregateTodolist1 = {
+    _count: Todolist1CountAggregateOutputType | null
+    _avg: Todolist1AvgAggregateOutputType | null
+    _sum: Todolist1SumAggregateOutputType | null
+    _min: Todolist1MinAggregateOutputType | null
+    _max: Todolist1MaxAggregateOutputType | null
+  }
+
+  export type Todolist1AvgAggregateOutputType = {
+    item_id: number | null
+    doc_id: number | null
+    checked: number | null
+  }
+
+  export type Todolist1SumAggregateOutputType = {
+    item_id: number | null
+    doc_id: number | null
+    checked: number | null
+  }
+
+  export type Todolist1MinAggregateOutputType = {
+    item_id: number | null
+    doc_id: number | null
+    checked: number | null
+    task: string | null
+  }
+
+  export type Todolist1MaxAggregateOutputType = {
+    item_id: number | null
+    doc_id: number | null
+    checked: number | null
+    task: string | null
+  }
+
+  export type Todolist1CountAggregateOutputType = {
+    item_id: number
+    doc_id: number
+    checked: number
+    task: number
+    _all: number
+  }
+
+
+  export type Todolist1AvgAggregateInputType = {
+    item_id?: true
+    doc_id?: true
+    checked?: true
+  }
+
+  export type Todolist1SumAggregateInputType = {
+    item_id?: true
+    doc_id?: true
+    checked?: true
+  }
+
+  export type Todolist1MinAggregateInputType = {
+    item_id?: true
+    doc_id?: true
+    checked?: true
+    task?: true
+  }
+
+  export type Todolist1MaxAggregateInputType = {
+    item_id?: true
+    doc_id?: true
+    checked?: true
+    task?: true
+  }
+
+  export type Todolist1CountAggregateInputType = {
+    item_id?: true
+    doc_id?: true
+    checked?: true
+    task?: true
+    _all?: true
+  }
+
+  export type Todolist1AggregateArgs = {
+    /**
+     * Filter which Todolist1 to aggregate.
+     * 
+    **/
+    where?: Todolist1WhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Todolist1s to fetch.
+     * 
+    **/
+    orderBy?: Enumerable<Todolist1OrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     * 
+    **/
+    cursor?: Todolist1WhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Todolist1s from the position of the cursor.
+     * 
+    **/
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Todolist1s.
+     * 
+    **/
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Todolist1s
+    **/
+    _count?: true | Todolist1CountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Todolist1AvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Todolist1SumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Todolist1MinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Todolist1MaxAggregateInputType
+  }
+
+  export type GetTodolist1AggregateType<T extends Todolist1AggregateArgs> = {
+        [P in keyof T & keyof AggregateTodolist1]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTodolist1[P]>
+      : GetScalarType<T[P], AggregateTodolist1[P]>
+  }
+
+
+
+
+  export type Todolist1GroupByArgs = {
+    where?: Todolist1WhereInput
+    orderBy?: Enumerable<Todolist1OrderByWithAggregationInput>
+    by: Array<Todolist1ScalarFieldEnum>
+    having?: Todolist1ScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Todolist1CountAggregateInputType | true
+    _avg?: Todolist1AvgAggregateInputType
+    _sum?: Todolist1SumAggregateInputType
+    _min?: Todolist1MinAggregateInputType
+    _max?: Todolist1MaxAggregateInputType
+  }
+
+
+  export type Todolist1GroupByOutputType = {
+    item_id: number
+    doc_id: number
+    checked: number | null
+    task: string | null
+    _count: Todolist1CountAggregateOutputType | null
+    _avg: Todolist1AvgAggregateOutputType | null
+    _sum: Todolist1SumAggregateOutputType | null
+    _min: Todolist1MinAggregateOutputType | null
+    _max: Todolist1MaxAggregateOutputType | null
+  }
+
+  type GetTodolist1GroupByPayload<T extends Todolist1GroupByArgs> = PrismaPromise<
+    Array<
+      PickArray<Todolist1GroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Todolist1GroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Todolist1GroupByOutputType[P]>
+            : GetScalarType<T[P], Todolist1GroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Todolist1Select = {
+    item_id?: boolean
+    doc_id?: boolean
+    checked?: boolean
+    task?: boolean
+  }
+
+
+  export type Todolist1GetPayload<S extends boolean | null | undefined | Todolist1Args> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Todolist1 :
+    S extends undefined ? never :
+    S extends { include: any } & (Todolist1Args | Todolist1FindManyArgs)
+    ? Todolist1 
+    : S extends { select: any } & (Todolist1Args | Todolist1FindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof Todolist1 ? Todolist1[P] : never
+  } 
+      : Todolist1
+
+
+  type Todolist1CountArgs = Merge<
+    Omit<Todolist1FindManyArgs, 'select' | 'include'> & {
+      select?: Todolist1CountAggregateInputType | true
+    }
+  >
+
+  export interface Todolist1Delegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+    /**
+     * Find zero or one Todolist1 that matches the filter.
+     * @param {Todolist1FindUniqueArgs} args - Arguments to find a Todolist1
+     * @example
+     * // Get one Todolist1
+     * const todolist1 = await prisma.todolist1.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends Todolist1FindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, Todolist1FindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Todolist1'> extends True ? Prisma__Todolist1Client<Todolist1GetPayload<T>> : Prisma__Todolist1Client<Todolist1GetPayload<T> | null, null>
+
+    /**
+     * Find one Todolist1 that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {Todolist1FindUniqueOrThrowArgs} args - Arguments to find a Todolist1
+     * @example
+     * // Get one Todolist1
+     * const todolist1 = await prisma.todolist1.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends Todolist1FindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, Todolist1FindUniqueOrThrowArgs>
+    ): Prisma__Todolist1Client<Todolist1GetPayload<T>>
+
+    /**
+     * Find the first Todolist1 that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Todolist1FindFirstArgs} args - Arguments to find a Todolist1
+     * @example
+     * // Get one Todolist1
+     * const todolist1 = await prisma.todolist1.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends Todolist1FindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, Todolist1FindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Todolist1'> extends True ? Prisma__Todolist1Client<Todolist1GetPayload<T>> : Prisma__Todolist1Client<Todolist1GetPayload<T> | null, null>
+
+    /**
+     * Find the first Todolist1 that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Todolist1FindFirstOrThrowArgs} args - Arguments to find a Todolist1
+     * @example
+     * // Get one Todolist1
+     * const todolist1 = await prisma.todolist1.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends Todolist1FindFirstOrThrowArgs>(
+      args?: SelectSubset<T, Todolist1FindFirstOrThrowArgs>
+    ): Prisma__Todolist1Client<Todolist1GetPayload<T>>
+
+    /**
+     * Find zero or more Todolist1s that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Todolist1FindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Todolist1s
+     * const todolist1s = await prisma.todolist1.findMany()
+     * 
+     * // Get first 10 Todolist1s
+     * const todolist1s = await prisma.todolist1.findMany({ take: 10 })
+     * 
+     * // Only select the `item_id`
+     * const todolist1WithItem_idOnly = await prisma.todolist1.findMany({ select: { item_id: true } })
+     * 
+    **/
+    findMany<T extends Todolist1FindManyArgs>(
+      args?: SelectSubset<T, Todolist1FindManyArgs>
+    ): PrismaPromise<Array<Todolist1GetPayload<T>>>
+
+    /**
+     * Create a Todolist1.
+     * @param {Todolist1CreateArgs} args - Arguments to create a Todolist1.
+     * @example
+     * // Create one Todolist1
+     * const Todolist1 = await prisma.todolist1.create({
+     *   data: {
+     *     // ... data to create a Todolist1
+     *   }
+     * })
+     * 
+    **/
+    create<T extends Todolist1CreateArgs>(
+      args: SelectSubset<T, Todolist1CreateArgs>
+    ): Prisma__Todolist1Client<Todolist1GetPayload<T>>
+
+    /**
+     * Create many Todolist1s.
+     *     @param {Todolist1CreateManyArgs} args - Arguments to create many Todolist1s.
+     *     @example
+     *     // Create many Todolist1s
+     *     const todolist1 = await prisma.todolist1.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends Todolist1CreateManyArgs>(
+      args?: SelectSubset<T, Todolist1CreateManyArgs>
+    ): PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Todolist1.
+     * @param {Todolist1DeleteArgs} args - Arguments to delete one Todolist1.
+     * @example
+     * // Delete one Todolist1
+     * const Todolist1 = await prisma.todolist1.delete({
+     *   where: {
+     *     // ... filter to delete one Todolist1
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends Todolist1DeleteArgs>(
+      args: SelectSubset<T, Todolist1DeleteArgs>
+    ): Prisma__Todolist1Client<Todolist1GetPayload<T>>
+
+    /**
+     * Update one Todolist1.
+     * @param {Todolist1UpdateArgs} args - Arguments to update one Todolist1.
+     * @example
+     * // Update one Todolist1
+     * const todolist1 = await prisma.todolist1.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends Todolist1UpdateArgs>(
+      args: SelectSubset<T, Todolist1UpdateArgs>
+    ): Prisma__Todolist1Client<Todolist1GetPayload<T>>
+
+    /**
+     * Delete zero or more Todolist1s.
+     * @param {Todolist1DeleteManyArgs} args - Arguments to filter Todolist1s to delete.
+     * @example
+     * // Delete a few Todolist1s
+     * const { count } = await prisma.todolist1.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends Todolist1DeleteManyArgs>(
+      args?: SelectSubset<T, Todolist1DeleteManyArgs>
+    ): PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Todolist1s.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Todolist1UpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Todolist1s
+     * const todolist1 = await prisma.todolist1.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends Todolist1UpdateManyArgs>(
+      args: SelectSubset<T, Todolist1UpdateManyArgs>
+    ): PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Todolist1.
+     * @param {Todolist1UpsertArgs} args - Arguments to update or create a Todolist1.
+     * @example
+     * // Update or create a Todolist1
+     * const todolist1 = await prisma.todolist1.upsert({
+     *   create: {
+     *     // ... data to create a Todolist1
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Todolist1 we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends Todolist1UpsertArgs>(
+      args: SelectSubset<T, Todolist1UpsertArgs>
+    ): Prisma__Todolist1Client<Todolist1GetPayload<T>>
+
+    /**
+     * Count the number of Todolist1s.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Todolist1CountArgs} args - Arguments to filter Todolist1s to count.
+     * @example
+     * // Count the number of Todolist1s
+     * const count = await prisma.todolist1.count({
+     *   where: {
+     *     // ... the filter for the Todolist1s we want to count
+     *   }
+     * })
+    **/
+    count<T extends Todolist1CountArgs>(
+      args?: Subset<T, Todolist1CountArgs>,
+    ): PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Todolist1CountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Todolist1.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Todolist1AggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Todolist1AggregateArgs>(args: Subset<T, Todolist1AggregateArgs>): PrismaPromise<GetTodolist1AggregateType<T>>
+
+    /**
+     * Group by Todolist1.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Todolist1GroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Todolist1GroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Todolist1GroupByArgs['orderBy'] }
+        : { orderBy?: Todolist1GroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Todolist1GroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTodolist1GroupByPayload<T> : PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Todolist1.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__Todolist1Client<T, Null = never> implements PrismaPromise<T> {
+    [prisma]: true;
+    private readonly _dmmf;
+    private readonly _fetcher;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+    readonly [Symbol.toStringTag]: 'PrismaClientPromise';
+
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Todolist1 base type for findUnique actions
+   */
+  export type Todolist1FindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the Todolist1
+     * 
+    **/
+    select?: Todolist1Select | null
+    /**
+     * Filter, which Todolist1 to fetch.
+     * 
+    **/
+    where: Todolist1WhereUniqueInput
+  }
+
+  /**
+   * Todolist1 findUnique
+   */
+  export interface Todolist1FindUniqueArgs extends Todolist1FindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Todolist1 findUniqueOrThrow
+   */
+  export type Todolist1FindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Todolist1
+     * 
+    **/
+    select?: Todolist1Select | null
+    /**
+     * Filter, which Todolist1 to fetch.
+     * 
+    **/
+    where: Todolist1WhereUniqueInput
+  }
+
+
+  /**
+   * Todolist1 base type for findFirst actions
+   */
+  export type Todolist1FindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the Todolist1
+     * 
+    **/
+    select?: Todolist1Select | null
+    /**
+     * Filter, which Todolist1 to fetch.
+     * 
+    **/
+    where?: Todolist1WhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Todolist1s to fetch.
+     * 
+    **/
+    orderBy?: Enumerable<Todolist1OrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Todolist1s.
+     * 
+    **/
+    cursor?: Todolist1WhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Todolist1s from the position of the cursor.
+     * 
+    **/
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Todolist1s.
+     * 
+    **/
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Todolist1s.
+     * 
+    **/
+    distinct?: Enumerable<Todolist1ScalarFieldEnum>
+  }
+
+  /**
+   * Todolist1 findFirst
+   */
+  export interface Todolist1FindFirstArgs extends Todolist1FindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Todolist1 findFirstOrThrow
+   */
+  export type Todolist1FindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Todolist1
+     * 
+    **/
+    select?: Todolist1Select | null
+    /**
+     * Filter, which Todolist1 to fetch.
+     * 
+    **/
+    where?: Todolist1WhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Todolist1s to fetch.
+     * 
+    **/
+    orderBy?: Enumerable<Todolist1OrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Todolist1s.
+     * 
+    **/
+    cursor?: Todolist1WhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Todolist1s from the position of the cursor.
+     * 
+    **/
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Todolist1s.
+     * 
+    **/
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Todolist1s.
+     * 
+    **/
+    distinct?: Enumerable<Todolist1ScalarFieldEnum>
+  }
+
+
+  /**
+   * Todolist1 findMany
+   */
+  export type Todolist1FindManyArgs = {
+    /**
+     * Select specific fields to fetch from the Todolist1
+     * 
+    **/
+    select?: Todolist1Select | null
+    /**
+     * Filter, which Todolist1s to fetch.
+     * 
+    **/
+    where?: Todolist1WhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Todolist1s to fetch.
+     * 
+    **/
+    orderBy?: Enumerable<Todolist1OrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Todolist1s.
+     * 
+    **/
+    cursor?: Todolist1WhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Todolist1s from the position of the cursor.
+     * 
+    **/
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Todolist1s.
+     * 
+    **/
+    skip?: number
+    distinct?: Enumerable<Todolist1ScalarFieldEnum>
+  }
+
+
+  /**
+   * Todolist1 create
+   */
+  export type Todolist1CreateArgs = {
+    /**
+     * Select specific fields to fetch from the Todolist1
+     * 
+    **/
+    select?: Todolist1Select | null
+    /**
+     * The data needed to create a Todolist1.
+     * 
+    **/
+    data: XOR<Todolist1CreateInput, Todolist1UncheckedCreateInput>
+  }
+
+
+  /**
+   * Todolist1 createMany
+   */
+  export type Todolist1CreateManyArgs = {
+    /**
+     * The data used to create many Todolist1s.
+     * 
+    **/
+    data: Enumerable<Todolist1CreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Todolist1 update
+   */
+  export type Todolist1UpdateArgs = {
+    /**
+     * Select specific fields to fetch from the Todolist1
+     * 
+    **/
+    select?: Todolist1Select | null
+    /**
+     * The data needed to update a Todolist1.
+     * 
+    **/
+    data: XOR<Todolist1UpdateInput, Todolist1UncheckedUpdateInput>
+    /**
+     * Choose, which Todolist1 to update.
+     * 
+    **/
+    where: Todolist1WhereUniqueInput
+  }
+
+
+  /**
+   * Todolist1 updateMany
+   */
+  export type Todolist1UpdateManyArgs = {
+    /**
+     * The data used to update Todolist1s.
+     * 
+    **/
+    data: XOR<Todolist1UpdateManyMutationInput, Todolist1UncheckedUpdateManyInput>
+    /**
+     * Filter which Todolist1s to update
+     * 
+    **/
+    where?: Todolist1WhereInput
+  }
+
+
+  /**
+   * Todolist1 upsert
+   */
+  export type Todolist1UpsertArgs = {
+    /**
+     * Select specific fields to fetch from the Todolist1
+     * 
+    **/
+    select?: Todolist1Select | null
+    /**
+     * The filter to search for the Todolist1 to update in case it exists.
+     * 
+    **/
+    where: Todolist1WhereUniqueInput
+    /**
+     * In case the Todolist1 found by the `where` argument doesn't exist, create a new Todolist1 with this data.
+     * 
+    **/
+    create: XOR<Todolist1CreateInput, Todolist1UncheckedCreateInput>
+    /**
+     * In case the Todolist1 was found with the provided `where` argument, update it with this data.
+     * 
+    **/
+    update: XOR<Todolist1UpdateInput, Todolist1UncheckedUpdateInput>
+  }
+
+
+  /**
+   * Todolist1 delete
+   */
+  export type Todolist1DeleteArgs = {
+    /**
+     * Select specific fields to fetch from the Todolist1
+     * 
+    **/
+    select?: Todolist1Select | null
+    /**
+     * Filter which Todolist1 to delete.
+     * 
+    **/
+    where: Todolist1WhereUniqueInput
+  }
+
+
+  /**
+   * Todolist1 deleteMany
+   */
+  export type Todolist1DeleteManyArgs = {
+    /**
+     * Filter which Todolist1s to delete
+     * 
+    **/
+    where?: Todolist1WhereInput
+  }
+
+
+  /**
+   * Todolist1 without action
+   */
+  export type Todolist1Args = {
+    /**
+     * Select specific fields to fetch from the Todolist1
+     * 
+    **/
+    select?: Todolist1Select | null
+  }
+
+
+
+  /**
    * Enums
    */
 
@@ -4940,6 +5934,16 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
   };
 
   export type TestdocumentScalarFieldEnum = (typeof TestdocumentScalarFieldEnum)[keyof typeof TestdocumentScalarFieldEnum]
+
+
+  export const Todolist1ScalarFieldEnum: {
+    item_id: 'item_id',
+    doc_id: 'doc_id',
+    checked: 'checked',
+    task: 'task'
+  };
+
+  export type Todolist1ScalarFieldEnum = (typeof Todolist1ScalarFieldEnum)[keyof typeof Todolist1ScalarFieldEnum]
 
 
   export const TodolistScalarFieldEnum: {
@@ -5145,6 +6149,49 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     AND?: Enumerable<TodolistScalarWhereWithAggregatesInput>
     OR?: Enumerable<TodolistScalarWhereWithAggregatesInput>
     NOT?: Enumerable<TodolistScalarWhereWithAggregatesInput>
+    item_id?: IntWithAggregatesFilter | number
+    doc_id?: IntWithAggregatesFilter | number
+    checked?: IntNullableWithAggregatesFilter | number | null
+    task?: StringNullableWithAggregatesFilter | string | null
+  }
+
+  export type Todolist1WhereInput = {
+    AND?: Enumerable<Todolist1WhereInput>
+    OR?: Enumerable<Todolist1WhereInput>
+    NOT?: Enumerable<Todolist1WhereInput>
+    item_id?: IntFilter | number
+    doc_id?: IntFilter | number
+    checked?: IntNullableFilter | number | null
+    task?: StringNullableFilter | string | null
+  }
+
+  export type Todolist1OrderByWithRelationInput = {
+    item_id?: SortOrder
+    doc_id?: SortOrder
+    checked?: SortOrder
+    task?: SortOrder
+  }
+
+  export type Todolist1WhereUniqueInput = {
+    item_id?: number
+  }
+
+  export type Todolist1OrderByWithAggregationInput = {
+    item_id?: SortOrder
+    doc_id?: SortOrder
+    checked?: SortOrder
+    task?: SortOrder
+    _count?: Todolist1CountOrderByAggregateInput
+    _avg?: Todolist1AvgOrderByAggregateInput
+    _max?: Todolist1MaxOrderByAggregateInput
+    _min?: Todolist1MinOrderByAggregateInput
+    _sum?: Todolist1SumOrderByAggregateInput
+  }
+
+  export type Todolist1ScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<Todolist1ScalarWhereWithAggregatesInput>
+    OR?: Enumerable<Todolist1ScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<Todolist1ScalarWhereWithAggregatesInput>
     item_id?: IntWithAggregatesFilter | number
     doc_id?: IntWithAggregatesFilter | number
     checked?: IntNullableWithAggregatesFilter | number | null
@@ -5358,6 +6405,55 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
   }
 
   export type TodolistUncheckedUpdateManyInput = {
+    item_id?: IntFieldUpdateOperationsInput | number
+    doc_id?: IntFieldUpdateOperationsInput | number
+    checked?: NullableIntFieldUpdateOperationsInput | number | null
+    task?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type Todolist1CreateInput = {
+    item_id: number
+    doc_id: number
+    checked?: number | null
+    task?: string | null
+  }
+
+  export type Todolist1UncheckedCreateInput = {
+    item_id: number
+    doc_id: number
+    checked?: number | null
+    task?: string | null
+  }
+
+  export type Todolist1UpdateInput = {
+    item_id?: IntFieldUpdateOperationsInput | number
+    doc_id?: IntFieldUpdateOperationsInput | number
+    checked?: NullableIntFieldUpdateOperationsInput | number | null
+    task?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type Todolist1UncheckedUpdateInput = {
+    item_id?: IntFieldUpdateOperationsInput | number
+    doc_id?: IntFieldUpdateOperationsInput | number
+    checked?: NullableIntFieldUpdateOperationsInput | number | null
+    task?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type Todolist1CreateManyInput = {
+    item_id: number
+    doc_id: number
+    checked?: number | null
+    task?: string | null
+  }
+
+  export type Todolist1UpdateManyMutationInput = {
+    item_id?: IntFieldUpdateOperationsInput | number
+    doc_id?: IntFieldUpdateOperationsInput | number
+    checked?: NullableIntFieldUpdateOperationsInput | number | null
+    task?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type Todolist1UncheckedUpdateManyInput = {
     item_id?: IntFieldUpdateOperationsInput | number
     doc_id?: IntFieldUpdateOperationsInput | number
     checked?: NullableIntFieldUpdateOperationsInput | number | null
@@ -5625,6 +6721,39 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
   }
 
   export type TodolistSumOrderByAggregateInput = {
+    item_id?: SortOrder
+    doc_id?: SortOrder
+    checked?: SortOrder
+  }
+
+  export type Todolist1CountOrderByAggregateInput = {
+    item_id?: SortOrder
+    doc_id?: SortOrder
+    checked?: SortOrder
+    task?: SortOrder
+  }
+
+  export type Todolist1AvgOrderByAggregateInput = {
+    item_id?: SortOrder
+    doc_id?: SortOrder
+    checked?: SortOrder
+  }
+
+  export type Todolist1MaxOrderByAggregateInput = {
+    item_id?: SortOrder
+    doc_id?: SortOrder
+    checked?: SortOrder
+    task?: SortOrder
+  }
+
+  export type Todolist1MinOrderByAggregateInput = {
+    item_id?: SortOrder
+    doc_id?: SortOrder
+    checked?: SortOrder
+    task?: SortOrder
+  }
+
+  export type Todolist1SumOrderByAggregateInput = {
     item_id?: SortOrder
     doc_id?: SortOrder
     checked?: SortOrder

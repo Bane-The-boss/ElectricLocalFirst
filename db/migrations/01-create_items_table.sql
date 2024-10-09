@@ -43,12 +43,18 @@ CREATE TABLE IF NOT EXISTS todolist(
 );
 
 
+CREATE TABLE IF NOT EXISTS todolist1(
+  item_id integer PRIMARY KEY NOT NULL,
+  doc_id integer NOT NULL, 
+  checked integer , 
+  task text
+);
+
 -- ⚡
 -- Electrify the items table
 ALTER TABLE random1 ENABLE ELECTRIC;
 ALTER TABLE testdocument ENABLE ELECTRIC;
 ALTER TABLE images ENABLE ELECTRIC;
 ALTER TABLE todolist ENABLE ELECTRIC;
-
-
+ALTER TABLE todolist1 ENABLE ELECTRIC;
 
