@@ -1,0 +1,17 @@
+{
+    "name": "Mini LabBook",
+    "short_name": "Mini LabBook",
+    "start_url": "/index.html",
+    "display": "fullscreen",
+    "background_color": "#FF0000",
+    "theme_color": "#FFFF00", 
+    "icons":[
+        {
+            "src": "/src/assets/todolist-192x192.png", 
+            "type": "image/png",
+            "size": "192x192"
+        }
+    ]
+
+
+}
